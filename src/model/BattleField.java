@@ -5,17 +5,47 @@ import java.util.List;
 
 import model.ship.Ship;
 
+
+
+/**
+ * 2D field with ships on it
+ * @author Victor
+ *
+ */
 public class BattleField {
 	
 	private List<Ship> ships;
 	private boolean[][] touched;
 
+	
+	/**
+	 * Construct a battlefield
+	 * @param size of the battlefield
+	 */
 	public BattleField(int size) {
 		this.touched = new boolean[size][size];
 		this.ships = new ArrayList<Ship>();
 	}
 	
+	/**
+	 * Size of the battlefield (in cases)
+	 * @return size of the battlefield (in cases)
+	 */
+	public int size() {
+		return touched.length;
+	}
+	
+	
+	/**
+	 * Receive a shot at a given position on the field
+	 * @param x absissa
+	 * @param y ordinate
+	 * @return true if a ship was touched
+	 */
 	public boolean receiveShot(int x, int y) {
+		if(x < 0 || x >= size() || y < 0 || y >= size())
+			return false;
+			
 		for(Ship s : ships) {
 			if(s.receiveShot(x, y)) {
 				return true;
@@ -24,6 +54,13 @@ public class BattleField {
 		return false;
 	}
 	
+	
+	/**
+	 * Indicates whether a ship is destroyed at a given position
+	 * @param x absissa
+	 * @param y ordinate
+	 * @return true if a ship is destroyed at the given position
+	 */
 	public boolean destroyed(int x, int y) {
 		for(Ship s : ships) {
 			/*if(s.isDestructible(x, y) && s.isDestroyed()) {
@@ -32,7 +69,14 @@ public class BattleField {
 		}
 		return false;
 	}
+
 	
+	/**
+	 * Get the ship at a given position
+	 * @param x absissa
+	 * @param y ordinate
+	 * @return the ship at the given position, or null
+	 */
 	public Ship getShip(int x, int y) {
 		for(Ship s : ships) {
 			/*if(s.isDestructible(x, y)) {
@@ -42,10 +86,22 @@ public class BattleField {
 		return null;
 	}
 	
+	
+	/**
+	 * Indicates whether a position has already been shot
+	 * @param x absissa
+	 * @param y ordinate
+	 * @return true if the position has already been shot
+	 */
 	public boolean touched(int x, int y) {
 		return touched[x][y];
 	}
 	
+	
+	/**
+	 * Indicates if all ships are destroyed
+	 * @return true if all ships are destroyed
+	 */
 	public boolean won() {
 		return false;
 	}
