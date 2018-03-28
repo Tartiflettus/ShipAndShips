@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exception.NotInFieldException;
-import exception.ShipException;
 import model.ship.Ship;
 
 

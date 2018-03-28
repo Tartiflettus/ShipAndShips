@@ -2,7 +2,6 @@ package model.strategy;
 
 import java.util.List;
 
-import exception.NotPlaceableException;
 import exception.ShipException;
 import model.BattleField;
 import model.ship.Ship;
