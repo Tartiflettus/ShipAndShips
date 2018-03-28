@@ -28,7 +28,9 @@ public class Model extends Observable {
 
 	
 	public Model() {
-		// TODO Auto-generated constructor stub
+		int sizeBattleField = 10;
+		ally = new BattleField(sizeBattleField);
+		opponent = new BattleField(sizeBattleField);
 	}
 	
 	public boolean won() {
@@ -99,6 +101,15 @@ public class Model extends Observable {
 		return currentPlayer;
 	}
 	
+	
+	public BattleField getAlly() {
+		return ally;
+	}
+
+	public BattleField getOpponent() {
+		return opponent;
+	}
+
 	public void save() throws IOException {
 		
 	}
