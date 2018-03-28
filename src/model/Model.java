@@ -27,6 +27,9 @@ public class Model extends Observable {
 	}
 	
 	public boolean won() {
+		if(ally.won() || opponent.won()) {
+			return true;
+		}
 		return false;
 	}
 	
