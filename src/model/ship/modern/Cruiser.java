@@ -2,22 +2,14 @@ package model.ship.modern;
 
 import model.ship.Ship;
 
-public class Cruiser implements Ship {
+
+public class Cruiser extends Ship {
 
 	public Cruiser() {
-		// TODO Auto-generated constructor stub
-	}
-
-	@Override
-	public boolean receiveShot(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean isDestroyed() {
-		// TODO Auto-generated method stub
-		return false;
+		height = 8;
+		width = 2;
+		nbCases = height*width;
+		nbCasesTouched = 0;
 	}
 
 }
