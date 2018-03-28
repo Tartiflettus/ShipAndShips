@@ -119,7 +119,12 @@ public class BattleField {
 	 * @return true if all ships are destroyed
 	 */
 	public boolean won() {
-		return false;
+		for(Ship s : ships) {
+			if(!s.isDestroyed()) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 
