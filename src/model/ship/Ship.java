@@ -7,6 +7,7 @@ public abstract class Ship {
 	protected int width;
 	protected int nbCases;
 	protected int nbCasesTouched;
+	protected boolean isPlaced;
 	
 	/**
 	 * 
@@ -33,6 +34,7 @@ public abstract class Ship {
 	public void setPosition(int newX, int newY) {
 		x=newX;
 		y=newY;
+		isPlaced = true;
 	}
 	
 	/**
@@ -69,5 +71,57 @@ public abstract class Ship {
 	public boolean isDestroyed() {
 		return (nbCasesTouched == nbCases) ? true : false;
 	}
+	
+	/**
+	 * 
+	 * @return true if the boat is placed on the battle field
+	 */
+	public boolean getIsPlaced() {
+		return isPlaced;
+	}
+
+	/**
+	 * 
+	 * @return the abscissa of the ship 
+	 */
+	public int getX() {
+		return x;
+	}
+
+	/**
+	 * 
+	 * @return the ordinate of the ship
+	 */
+	public int getY() {
+		return y;
+	}
+
+	/**
+	 * 
+	 * @return the height of the ship
+	 */
+	public int getHeight() {
+		return height;
+	}
+
+	/**
+	 * 
+	 * @return the width of the ship
+	 */
+	public int getWidth() {
+		return width;
+	}
+
+	/**
+	 * 
+	 * @return the number of cases of the ship
+	 */
+	public int getNbCases() {
+		return nbCases;
+	}
+	
+	
+	
+	
 
 }

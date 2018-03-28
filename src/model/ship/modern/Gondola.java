@@ -3,6 +3,11 @@ package model.ship.modern;
 import model.ship.Ship;
 
 
+/**
+ * A gondola from the modern period
+ * @author Maureen
+ *
+ */
 public class Gondola extends Ship {
 
 	public Gondola() {
@@ -10,6 +15,7 @@ public class Gondola extends Ship {
 		width = 1;
 		nbCases = height*width;
 		nbCasesTouched = 0;
+		isPlaced = false;
 	}
 
 }
