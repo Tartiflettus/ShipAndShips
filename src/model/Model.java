@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import exception.NotInFieldException;
 import exception.NotPlaceableException;
 import exception.ShipException;
 import model.ship.Ship;
@@ -49,6 +50,9 @@ public class Model extends Observable {
 		return false;
 	}
 	
+	/**
+	 * Execute the computer placement strategy of the ships 
+	 */
 	public void PlaceShipComputer() {
 		try {
 			List<Ship> listShips = shipFactory.getShips();
@@ -62,16 +66,37 @@ public class Model extends Observable {
 			
 	}
 	
+/**
+ * 
+ * @param ship that the player want to place
+ * @return true if the player can place the ship on the BattleField
+ */
 	public boolean placeShip(Ship ship) {
+		try {
+			return ally.placeShip(ship);
+		} catch (NotInFieldException e) {
+			System.err.println("Impossible to place the ship");
+		}
 		return false;
 	}
 	
+	/**
+	 * change the current player
+	 */
 	public void endTurn() {
-		
+		if(currentPlayer == PC) {
+			currentPlayer = PLAYER;
+		} else {
+			currentPlayer = PC;
+		}
 	}
 	
+	/**
+	 * 
+	 * @return true if the current player is the Human ; false if it's the computer
+	 */
 	public boolean currentPlayer() {
-		return false;
+		return currentPlayer;
 	}
 	
 	public void save() throws IOException {
