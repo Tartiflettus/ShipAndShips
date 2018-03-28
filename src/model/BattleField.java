@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exception.NotInFieldException;
-import exception.ShipException;
 import model.ship.Ship;
 
 
@@ -128,8 +127,6 @@ public class BattleField {
 		return true;
 	}
 	
-	
-	
 	/**
 	 * Place a ship at the given position
 	 * @param s ship to be placed
@@ -159,5 +156,4 @@ public class BattleField {
 		ships.add(s);
 		return true;
 	}
-
 }
