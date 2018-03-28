@@ -12,6 +12,12 @@ import model.ship.factory.ShipFactory;
 import model.strategy.ComputerStrategy;
 import model.strategy.PlacementStrategy;
 
+
+/**
+ * Base class, interface to wich communicate to play battleship
+ * @author PUBC
+ *
+ */
 public class Model extends Observable {
 	
 	private final static boolean PLAYER = false, PC = true;

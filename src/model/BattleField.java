@@ -52,7 +52,8 @@ public class BattleField {
 	 */
 	public boolean receiveShot(int x, int y) throws NotInFieldException {
 		if(invalidPos(x, y)) throw new NotInFieldException();
-			
+		
+		touched[x][y] = true;
 		for(Ship s : ships) {
 			if(s.receiveShot(x, y)) {
 				return true;
@@ -139,7 +140,7 @@ public class BattleField {
 		final int xe = x+w, ye = y+h;
 		
 		//can't place because a part is out of field
-		if(x < 0 || y < 0 || xe >= size() || ye >= size()) {
+		if(invalidPos(x, y) || invalidPos(xe, ye)) {
 			throw new NotInFieldException();
 		}
 		
