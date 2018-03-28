@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import exception.NotInFieldException;
 import exception.NotPlaceableException;
+import exception.ShipException;
 import model.ship.Ship;
 import model.ship.factory.ShipFactory;
 import model.strategy.ComputerStrategy;
@@ -55,17 +57,23 @@ public class Model extends Observable {
 		try {
 			List<Ship> listShips = shipFactory.getShips();
 			placement.placeShips(opponent, listShips);
+			
 		} catch (NotPlaceableException e) {
 			System.err.println("The computer can no longer place ships");
+		} catch(ShipException e) {
+			System.err.println("Error while trying to place computer ships");
 		}
 			
 	}
 	
-	public boolean placeShip(int x, int y, Ship ship) {
-		if()
-		ship.setPosition(x, y);
-		
-		return true;
+
+	public boolean placeShip(Ship ship) {
+		try {
+			return ally.placeShip(ship);
+		} catch (NotInFieldException e) {
+			System.err.println("Impossible to place the ship");
+		}
+		return false;
 	}
 	
 	/**

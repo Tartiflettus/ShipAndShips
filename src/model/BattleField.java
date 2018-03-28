@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exception.NotInFieldException;
+import exception.ShipException;
 import model.ship.Ship;
 
 
@@ -128,5 +129,35 @@ public class BattleField {
 	}
 	
 	
+	
+	/**
+	 * Place a ship at the given position
+	 * @param s ship to be placed
+	 * @return true if the ship was correctly placed
+	 * @throws NotInFieldException 
+	 */
+	public boolean placeShip(Ship s) throws NotInFieldException {
+		final int x = s.getX(), y = s.getY();
+		final boolean horizontal = s.OrientationChanged();
+		final int w = s.getWidth(), h = s.getHeight();
+		final int xe = x+w, ye = y+h;
+		
+		if(horizontal) {
+			for(int i=x; i < Math.min(xe, size()); i++) {
+				if(getShip(i, y) != null) {
+					return false;
+				}
+			}
+		}else {
+			for(int i=y; i < Math.min(ye, size()); i++) {
+				if(getShip(x, i) != null) {
+					return false;
+				}
+			}
+		}
+		
+		ships.add(s);
+		return true;
+	}
 
 }

@@ -2,7 +2,9 @@ package model.strategy;
 
 import java.util.List;
 
+import exception.NotInFieldException;
 import exception.NotPlaceableException;
+import exception.ShipException;
 import model.BattleField;
 import model.ship.Ship;
 
@@ -21,8 +23,9 @@ public class PlacementRandomStrategy implements PlacementStrategy {
 	/**
 	 * @param bf Battle Field
 	 * @param ships list of ships
+	 * @throws NotInFieldException 
 	 */
-	public void placeShips(BattleField bf, List<Ship> ships) throws NotPlaceableException {
+	public void placeShips(BattleField bf, List<Ship> ships) throws ShipException {
 		int bfSize = bf.size();
 		for(Ship s : ships) {
 			int height = s.getHeight(); 
