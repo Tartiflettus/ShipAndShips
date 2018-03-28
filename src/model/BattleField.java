@@ -127,6 +127,8 @@ public class BattleField {
 		return true;
 	}
 	
-	
+	public String parse(){
+		return null;
+	}
 
 }

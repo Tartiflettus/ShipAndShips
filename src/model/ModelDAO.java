@@ -15,7 +15,7 @@ public class ModelDAO {
 	}
 	
 	public void save(Model m) throws IOException {
-		
+		m.parse();
 	}
 	
 	public Model load(String name) throws IOException {

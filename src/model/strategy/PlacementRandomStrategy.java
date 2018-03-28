@@ -52,5 +52,9 @@ public class PlacementRandomStrategy implements PlacementStrategy {
 		}
 
 	}
+	
+	public String parse(){
+		return null;
+	}
 
 }

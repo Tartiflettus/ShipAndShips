@@ -20,4 +20,10 @@ public class RandomComputerStrategy implements ComputerStrategy {
 
 	}
 
+
+	@Override
+	public String parse() {
+		return null;
+	}
+
 }

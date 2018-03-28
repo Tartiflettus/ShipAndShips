@@ -50,15 +50,24 @@ public class Model extends Observable {
 	}
 	
 	public void endTurn() {
-		
+		currentPlayer=!currentPlayer;
 	}
 	
 	public boolean currentPlayer() {
 		return false;
 	}
 	
-	public void save() throws IOException {
+	public void save() throws IOException {	
 		
+	}
+	
+	public String parse(){
+		StringBuilder buff = new StringBuilder("");
+		
+		buff.append(currentPlayer+"	"+strat.parse()+"	"+placement.parse()+"	"+ally.parse()+"	"+opponent.parse());
+		
+		return buff.toString();
+	
 	}
 
 }
