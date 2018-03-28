@@ -1,8 +1,11 @@
 package model;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
+import exception.NotPlaceableException;
 import model.ship.Ship;
 import model.ship.factory.ShipFactory;
 import model.strategy.ComputerStrategy;
@@ -43,6 +46,16 @@ public class Model extends Observable {
 	
 	public boolean shot(int x, int y) {
 		return false;
+	}
+	
+	public void PlaceShipComputer() {
+		try {
+			List<Ship> listShips = shipFactory.getShips();
+			placement.placeShips(opponent, listShips);
+		} catch (NotPlaceableException e) {
+			System.err.println("The computer can no longer place ships");
+		}
+			
 	}
 	
 	public boolean placeShip(int x, int y, Ship ship) {

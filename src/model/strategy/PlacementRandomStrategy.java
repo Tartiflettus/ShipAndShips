@@ -1,5 +1,7 @@
 package model.strategy;
 
+import java.util.List;
+
 import exception.NotPlaceableException;
 import model.BattleField;
 import model.ship.Ship;
@@ -13,7 +15,6 @@ public class PlacementRandomStrategy implements PlacementStrategy {
 	}
 
 	private PlacementRandomStrategy() {
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -21,7 +22,7 @@ public class PlacementRandomStrategy implements PlacementStrategy {
 	 * @param bf Battle Field
 	 * @param ships list of ships
 	 */
-	public void placeShips(BattleField bf, Ship... ships) throws NotPlaceableException {
+	public void placeShips(BattleField bf, List<Ship> ships) throws NotPlaceableException {
 		int bfSize = bf.size();
 		for(Ship s : ships) {
 			int height = s.getHeight(); 
