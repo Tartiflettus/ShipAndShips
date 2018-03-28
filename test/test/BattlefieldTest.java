@@ -20,7 +20,7 @@ import model.ship.modern.Gondola;
  */
 class BattlefieldTest {
 
-	/*@BeforeAll
+	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 	}
 
@@ -34,8 +34,8 @@ class BattlefieldTest {
 
 	@AfterEach
 	void tearDown() throws Exception {
-	}*/
-
+	}
+	
 	
 	/////////////////////////////////////////////////////////////
 	@Test
