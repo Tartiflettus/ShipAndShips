@@ -32,6 +32,9 @@ public class Model extends Observable {
 		opponent = new BattleField(sizeBattleField);
 	}
 	
+	/**
+	 * @return true if the player or the computer won
+	 */
 	public boolean won() {
 		if(ally.won() || opponent.won()) {
 			return true;
@@ -39,7 +42,12 @@ public class Model extends Observable {
 		return false;
 	}
 	
+	/**
+	 * 
+	 * @param sf ShipFactory
+	 */
 	public void setPeriod(ShipFactory sf) {
+		shipFactory = sf;
 		
 	}
 	
