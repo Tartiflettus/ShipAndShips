@@ -7,6 +7,13 @@ import model.ship.Ship;
 import model.ship.modern.Cruiser;
 import model.ship.modern.Gondola;
 
+
+
+/**
+ * A factory to construct modern ships
+ * @author Maureen
+ *
+ */
 public class ModernShipFactory implements ShipFactory {
 	public static final ModernShipFactory instance = new ModernShipFactory();
 	
