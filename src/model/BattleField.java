@@ -3,19 +3,56 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.NotInFieldException;
 import model.ship.Ship;
 
+
+
+/**
+ * 2D field with ships on it
+ * @author Victor
+ *
+ */
 public class BattleField {
 	
 	private List<Ship> ships;
 	private boolean[][] touched;
+	
+	
+	
+	private boolean invalidPos(int x, int y) {
+		return x < 0 || x >= size() || y < 0 || y >= size();
+	}
 
+	
+	/**
+	 * Construct a battlefield
+	 * @param size of the battlefield
+	 */
 	public BattleField(int size) {
 		this.touched = new boolean[size][size];
 		this.ships = new ArrayList<Ship>();
 	}
 	
-	public boolean receiveShot(int x, int y) {
+	/**
+	 * Size of the battlefield (in cases)
+	 * @return size of the battlefield (in cases)
+	 */
+	public int size() {
+		return touched.length;
+	}
+	
+	
+	/**
+	 * Receive a shot at a given position on the field
+	 * @param x absissa
+	 * @param y ordinate
+	 * @return true if a ship was touched
+	 * @throws NotInFieldException 
+	 */
+	public boolean receiveShot(int x, int y) throws NotInFieldException {
+		if(invalidPos(x, y)) throw new NotInFieldException();
+			
 		for(Ship s : ships) {
 			if(s.receiveShot(x, y)) {
 				return true;
@@ -24,28 +61,63 @@ public class BattleField {
 		return false;
 	}
 	
-	public boolean destroyed(int x, int y) {
+	
+	/**
+	 * Indicates whether a ship is destroyed at a given position
+	 * @param x absissa
+	 * @param y ordinate
+	 * @return true if a ship is destroyed at the given position
+	 * @throws NotInFieldException 
+	 */
+	public boolean destroyed(int x, int y) throws NotInFieldException {
+		if(invalidPos(x, y)) throw new NotInFieldException();
+		
 		for(Ship s : ships) {
-			/*if(s.isDestructible(x, y) && s.isDestroyed()) {
+			if(s.isDestructible(x, y) && s.isDestroyed()) {
 				return true;
-			}*/
+			}
 		}
 		return false;
 	}
+
 	
-	public Ship getShip(int x, int y) {
+	/**
+	 * Get the ship at a given position
+	 * @param x absissa
+	 * @param y ordinate
+	 * @return the ship at the given position, or null
+	 * @throws NotInFieldException 
+	 */
+	public Ship getShip(int x, int y) throws NotInFieldException {
+		if(invalidPos(x, y)) throw new NotInFieldException();
+		
 		for(Ship s : ships) {
-			/*if(s.isDestructible(x, y)) {
+			if(s.isDestructible(x, y)) {
 				return s;
-			}*/
+			}
 		}
 		return null;
 	}
 	
-	public boolean touched(int x, int y) {
+	
+	/**
+	 * Indicates whether a position has already been shot
+	 * @param x absissa
+	 * @param y ordinate
+	 * @return true if the position has already been shot
+	 * @throws NotInFieldException 
+	 */
+	public boolean touched(int x, int y) throws NotInFieldException {
+		if(invalidPos(x, y)) throw new NotInFieldException();
+		
 		return touched[x][y];
 	}
 	
+	
+	/**
+	 * Indicates if all ships are destroyed
+	 * @return true if all ships are destroyed
+	 */
 	public boolean won() {
 		return false;
 	}
