@@ -121,6 +121,4 @@ public class BattleField {
 	public boolean won() {
 		return false;
 	}
-	
-
 }
