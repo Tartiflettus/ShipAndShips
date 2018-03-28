@@ -36,6 +36,7 @@ public class FieldView extends JFrame implements Observer {
 	public FieldView(Model mod) {
 		model = mod;
 		setTitle("The Legendary Ships Battle");
+		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(600, 600));
 		
