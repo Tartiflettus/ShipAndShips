@@ -48,6 +48,9 @@ public class Model extends Observable {
 		return false;
 	}
 	
+	/**
+	 * Execute the computer placement strategy of the ships 
+	 */
 	public void PlaceShipComputer() {
 		try {
 			List<Ship> listShips = shipFactory.getShips();
@@ -59,15 +62,29 @@ public class Model extends Observable {
 	}
 	
 	public boolean placeShip(int x, int y, Ship ship) {
-		return false;
-	}
-	
-	public void endTurn() {
+		if()
+		ship.setPosition(x, y);
 		
+		return true;
 	}
 	
+	/**
+	 * change the current player
+	 */
+	public void endTurn() {
+		if(currentPlayer == PC) {
+			currentPlayer = PLAYER;
+		} else {
+			currentPlayer = PC;
+		}
+	}
+	
+	/**
+	 * 
+	 * @return true if the current player is the Human ; false if it's the computer
+	 */
 	public boolean currentPlayer() {
-		return false;
+		return currentPlayer;
 	}
 	
 	public void save() throws IOException {
