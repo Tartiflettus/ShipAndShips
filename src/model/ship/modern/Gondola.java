@@ -10,6 +10,7 @@ public class Gondola extends Ship {
 		width = 1;
 		nbCases = height*width;
 		nbCasesTouched = 0;
+		isPlaced = false;
 	}
 
 }

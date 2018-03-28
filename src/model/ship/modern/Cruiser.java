@@ -10,6 +10,7 @@ public class Cruiser extends Ship {
 		width = 2;
 		nbCases = height*width;
 		nbCasesTouched = 0;
+		isPlaced = false;
 	}
 
 }

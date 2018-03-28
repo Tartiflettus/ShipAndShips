@@ -19,7 +19,6 @@ public class ModernShipFactory implements ShipFactory {
 		
 		tabShip.add(ship1);
 		tabShip.add(ship2);
-		
 	}
 	
 /**
