@@ -52,7 +52,8 @@ public class BattleField {
 	 */
 	public boolean receiveShot(int x, int y) throws NotInFieldException {
 		if(invalidPos(x, y)) throw new NotInFieldException();
-			
+		
+		touched[x][y] = true;
 		for(Ship s : ships) {
 			if(s.receiveShot(x, y)) {
 				return true;
