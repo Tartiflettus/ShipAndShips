@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Observable;
 
 import exception.NotPlaceableException;
+import exception.ShipException;
 import model.ship.Ship;
 import model.ship.factory.ShipFactory;
 import model.strategy.ComputerStrategy;
@@ -54,11 +55,13 @@ public class Model extends Observable {
 			placement.placeShips(opponent, listShips);
 		} catch (NotPlaceableException e) {
 			System.err.println("The computer can no longer place ships");
+		} catch(ShipException e) {
+			System.err.println("Error while trying to place computer ships");
 		}
 			
 	}
 	
-	public boolean placeShip(int x, int y, Ship ship) {
+	public boolean placeShip(Ship ship) {
 		return false;
 	}
 	
