@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import exception.NotInFieldException;
 import model.ship.Ship;
 
 
@@ -16,6 +17,12 @@ public class BattleField {
 	
 	private List<Ship> ships;
 	private boolean[][] touched;
+	
+	
+	
+	private boolean invalidPos(int x, int y) {
+		return x < 0 || x >= size() || y < 0 || y >= size();
+	}
 
 	
 	/**
@@ -41,10 +48,10 @@ public class BattleField {
 	 * @param x absissa
 	 * @param y ordinate
 	 * @return true if a ship was touched
+	 * @throws NotInFieldException 
 	 */
-	public boolean receiveShot(int x, int y) {
-		if(x < 0 || x >= size() || y < 0 || y >= size())
-			return false;
+	public boolean receiveShot(int x, int y) throws NotInFieldException {
+		if(invalidPos(x, y)) throw new NotInFieldException();
 			
 		for(Ship s : ships) {
 			if(s.receiveShot(x, y)) {
@@ -60,12 +67,15 @@ public class BattleField {
 	 * @param x absissa
 	 * @param y ordinate
 	 * @return true if a ship is destroyed at the given position
+	 * @throws NotInFieldException 
 	 */
-	public boolean destroyed(int x, int y) {
+	public boolean destroyed(int x, int y) throws NotInFieldException {
+		if(invalidPos(x, y)) throw new NotInFieldException();
+		
 		for(Ship s : ships) {
-			/*if(s.isDestructible(x, y) && s.isDestroyed()) {
+			if(s.isDestructible(x, y) && s.isDestroyed()) {
 				return true;
-			}*/
+			}
 		}
 		return false;
 	}
@@ -76,12 +86,15 @@ public class BattleField {
 	 * @param x absissa
 	 * @param y ordinate
 	 * @return the ship at the given position, or null
+	 * @throws NotInFieldException 
 	 */
-	public Ship getShip(int x, int y) {
+	public Ship getShip(int x, int y) throws NotInFieldException {
+		if(invalidPos(x, y)) throw new NotInFieldException();
+		
 		for(Ship s : ships) {
-			/*if(s.isDestructible(x, y)) {
+			if(s.isDestructible(x, y)) {
 				return s;
-			}*/
+			}
 		}
 		return null;
 	}
@@ -92,8 +105,11 @@ public class BattleField {
 	 * @param x absissa
 	 * @param y ordinate
 	 * @return true if the position has already been shot
+	 * @throws NotInFieldException 
 	 */
-	public boolean touched(int x, int y) {
+	public boolean touched(int x, int y) throws NotInFieldException {
+		if(invalidPos(x, y)) throw new NotInFieldException();
+		
 		return touched[x][y];
 	}
 	
