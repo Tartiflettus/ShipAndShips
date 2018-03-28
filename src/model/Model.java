@@ -53,6 +53,7 @@ public class Model extends Observable {
 		try {
 			List<Ship> listShips = shipFactory.getShips();
 			placement.placeShips(opponent, listShips);
+			
 		} catch (NotPlaceableException e) {
 			System.err.println("The computer can no longer place ships");
 		} catch(ShipException e) {
