@@ -66,7 +66,11 @@ public class Model extends Observable {
 			
 	}
 	
-
+/**
+ * 
+ * @param ship that the player want to place
+ * @return true if the player can place the ship on the BattleField
+ */
 	public boolean placeShip(Ship ship) {
 		try {
 			return ally.placeShip(ship);
