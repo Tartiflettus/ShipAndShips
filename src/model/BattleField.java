@@ -135,24 +135,24 @@ public class BattleField {
 	 */
 	public boolean placeShip(Ship s) throws NotInFieldException {
 		final int x = s.getX(), y = s.getY();
-		final boolean horizontal = s.OrientationChanged();
 		final int w = s.getWidth(), h = s.getHeight();
 		final int xe = x+w, ye = y+h;
 		
-		if(horizontal) {
-			for(int i=x; i < Math.min(xe, size()); i++) {
-				if(getShip(i, y) != null) {
-					return false;
-				}
-			}
-		}else {
-			for(int i=y; i < Math.min(ye, size()); i++) {
-				if(getShip(x, i) != null) {
+		//can't place because a part is out of field
+		if(x < 0 || y < 0 || xe >= size() || ye >= size()) {
+			throw new NotInFieldException();
+		}
+		
+		//check if a case is already occupied
+		for(int xi=x; xi < xe; xi++) {
+			for(int yi=x; yi < ye; yi++) {
+				if(getShip(xi, yi) != null){
 					return false;
 				}
 			}
 		}
 		
+		//everything is right, can be placed
 		ships.add(s);
 		return true;
 	}
