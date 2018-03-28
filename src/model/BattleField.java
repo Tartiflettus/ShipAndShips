@@ -127,8 +127,6 @@ public class BattleField {
 		return true;
 	}
 	
-	
-	
 	/**
 	 * Place a ship at the given position
 	 * @param s ship to be placed
@@ -158,5 +156,4 @@ public class BattleField {
 		ships.add(s);
 		return true;
 	}
-
 }
