@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.Observable;
 import java.util.Observer;
@@ -12,12 +14,18 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import model.Model;
 
+
+
 public class FieldView extends JFrame implements Observer {
+	
+	private static final String[] BOAT_AGE = {"Modern"};
+	
 	private Model model;
 	
 	// MENU
@@ -44,6 +52,12 @@ public class FieldView extends JFrame implements Observer {
 		//new game
 		file.add(newGame);
 		newGame.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, KeyEvent.CTRL_MASK));
+		newGame.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				 new Dialog(null, "New Game", true, model);
+
+			}
+		});
 		
 		//save
 		file.add(save);

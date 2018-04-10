@@ -24,7 +24,9 @@ public class RandomComputerStrategy implements ComputerStrategy {
 		rand = new Random();
 	}
 
-	@Override
+	/**
+	 *  @param b Battle Field
+	 */
 	public void shot(BattleField b) throws NotInFieldException {
 		boolean findShot = false;
 		int x = -1, y = -1;

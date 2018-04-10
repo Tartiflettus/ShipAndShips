@@ -29,13 +29,21 @@ public class Model extends Observable {
 	private PlacementStrategy placement;
 	
 	private BattleField ally, opponent;
-
-
 	
 	public Model() {
 		int sizeBattleField = 10;
 		ally = new BattleField(sizeBattleField);
 		opponent = new BattleField(sizeBattleField);
+	}
+	
+	public Model(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {
+		int sizeBattleField = 10;
+		ally = new BattleField(sizeBattleField);
+		opponent = new BattleField(sizeBattleField);
+		
+		shipFactory = age;
+		strat = strategy;
+		placement = placementStrat;
 	}
 	
 	/**

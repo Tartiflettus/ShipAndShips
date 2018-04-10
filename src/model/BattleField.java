@@ -19,7 +19,12 @@ public class BattleField {
 	private boolean[][] touched;
 	
 	
-	
+	/**
+	 * 
+	 * @param x abscissa of the position
+	 * @param y ordinate of theposition
+	 * @return true if the position is invalid
+	 */
 	private boolean invalidPos(int x, int y) {
 		return x < 0 || x >= size() || y < 0 || y >= size();
 	}
