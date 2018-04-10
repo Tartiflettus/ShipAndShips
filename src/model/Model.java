@@ -104,9 +104,15 @@ public class Model extends Observable {
  * @param ship that the player want to place
  * @return true if the player can place the ship on the BattleField
  */
-	public boolean placeShip(Ship ship) {
+	public boolean placeShip(Ship ship, int x, int y) {
 		try {
-			return ally.placeShip(ship);
+			ship.setPosition(x, y);
+			boolean everythingIsOk = ally.placeShip(ship);
+			if(everythingIsOk) {
+				update();
+			} else {
+				return false; 
+			}
 		} catch (NotInFieldException e) {
 			System.err.println("Impossible to place the ship");
 		}

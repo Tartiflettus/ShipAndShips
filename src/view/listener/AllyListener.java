@@ -17,8 +17,11 @@ public class AllyListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		
+		// SI ETAT DU JEU = PLACER LES BATEAUX // TODO 
+		if(!model.won()) {
+			//model.placeShip(ship, x, y);
+			
+		}
 	}
 
 }
