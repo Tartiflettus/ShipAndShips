@@ -14,18 +14,17 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import model.Model;
+import view.listener.AllyListener;
+import view.listener.OpponentListener;
 
 
 
 public class FieldView extends JFrame implements Observer {
-	
-	private static final String[] BOAT_AGE = {"Modern"};
-	
+		
 	private Model model;
 	
 	// MENU
@@ -55,7 +54,6 @@ public class FieldView extends JFrame implements Observer {
 		newGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				 new Dialog(null, "New Game", true, model);
-
 			}
 		});
 		
@@ -77,12 +75,12 @@ public class FieldView extends JFrame implements Observer {
 		
 		//PANELS
 		//ally
-		add(ally, BorderLayout.NORTH);
+		add(ally, BorderLayout.SOUTH);
 		ally.setPreferredSize(new Dimension(250,250));
 		battleFieldAlly();
 		
 		//opponent
-		add(opponent, BorderLayout.SOUTH);
+		add(opponent, BorderLayout.NORTH);
 		opponent.setPreferredSize(new Dimension(250,250));
 		battleFieldOpponent();
 		
@@ -98,7 +96,9 @@ public class FieldView extends JFrame implements Observer {
 		ally.setLayout(new GridLayout(size, size));
 		for(int i = 0 ; i < size ; i++) {
 			for(int j=0 ; j < size ; j++) {
-				ally.add(new JButton());
+				JButton b = new JButton();
+				ally.add(b);
+				b.addActionListener(new AllyListener(model, i, j));
 			}
 		}
 		
@@ -109,7 +109,9 @@ public class FieldView extends JFrame implements Observer {
 		opponent.setLayout(new GridLayout(size, size));
 		for(int i = 0 ; i < size ; i++) {
 			for(int j=0 ; j < size ; j++) {
-				opponent.add(new JButton());
+				JButton b = new JButton(); 
+				opponent.add(b);
+				b.addActionListener(new OpponentListener(model, i, j));
 			}
 		}
 		

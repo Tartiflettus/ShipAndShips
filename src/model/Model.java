@@ -20,8 +20,8 @@ import model.strategy.PlacementStrategy;
  */
 public class Model extends Observable {
 	
-	private final static boolean PLAYER = false, PC = true;
-	private boolean currentPlayer;
+	public final static int PLAYER = 1, PC = 0;
+	private int currentPlayer;
 	
 	private ModelDAO dao;
 	private ShipFactory shipFactory;
@@ -64,12 +64,22 @@ public class Model extends Observable {
 		shipFactory = sf;
 		
 	}
+	/**
+	 *  Notify Observers
+	 */
+	private void update() {
+		setChanged();
+		notifyObservers();
+	}
 	
 	public void setSaveMethod(ModelDAO dao) {
 		
 	}
 	
 	public boolean shot(int x, int y) {
+
+		endTurn();
+		update();
 		return false;
 	}
 	
@@ -106,7 +116,7 @@ public class Model extends Observable {
 	/**
 	 * change the current player
 	 */
-	public void endTurn() {
+	private void endTurn() {
 		if(currentPlayer == PC) {
 			currentPlayer = PLAYER;
 		} else {
@@ -118,7 +128,7 @@ public class Model extends Observable {
 	 * 
 	 * @return true if the current player is the Human ; false if it's the computer
 	 */
-	public boolean currentPlayer() {
+	public int currentPlayer() {
 		return currentPlayer;
 	}
 	
