@@ -77,10 +77,29 @@ public class Model extends Observable {
 	}
 	
 	public boolean shot(int x, int y) {
-
-		endTurn();
-		update();
-		return false;
+		boolean success = false;
+		try {
+			//Shot on the current battlefield
+			switch(currentPlayer) {
+			case PLAYER:
+				success = opponent.receiveShot(x, y);
+				break;
+			case PC:
+				success = ally.receiveShot(x, y);
+				break;
+			}
+			if(success) {
+				endTurn();
+				update();
+			}
+			
+			return success;
+		}
+		catch(NotInFieldException e) {
+			System.err.println("Shooting out of battlefield");
+		}
+		
+		return success;
 	}
 	
 	/**

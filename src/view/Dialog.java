@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 
 
 import model.Model;
+import model.ship.factory.ModernShipFactory;
 
 public class Dialog extends JDialog {
 	private static final String[] AGE_BOAT = {"Modern"};
@@ -88,11 +89,11 @@ public class Dialog extends JDialog {
     JButton okBouton = new JButton("OK");
     okBouton.addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent arg0) {        
-        model = new Model();
+        //model.newGame();
         // TODO
-        // model.setPeriod();
-        // model.setComputerStrategy();
-        // model.setPlacementStrategy();
+        model.setPeriod(ModernShipFactory.getInstance());
+        //model.setComputerStrategy();
+        //model.setPlacementStrategy();
         setVisible(false);
       }
     });

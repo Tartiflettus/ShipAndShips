@@ -15,7 +15,7 @@ import model.ship.modern.Gondola;
  *
  */
 public class ModernShipFactory implements ShipFactory {
-	public static final ModernShipFactory instance = new ModernShipFactory();
+	private static final ModernShipFactory instance = new ModernShipFactory();
 	
 	private ArrayList<Ship> tabShip;
 	
@@ -39,7 +39,7 @@ public class ModernShipFactory implements ShipFactory {
 	 * 
 	 * @return the instance of ModernShipFactory
 	 */
-	public ModernShipFactory getInstance() {
+	public static ModernShipFactory getInstance() {
 		return instance;
 	}
 }
