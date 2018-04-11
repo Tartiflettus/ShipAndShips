@@ -18,13 +18,13 @@ public class CrossComputerStrategy implements ComputerStrategy {
 	private int lastShotY;
 	private Random rand;
 
-	public CrossComputerStrategy() {
+	private CrossComputerStrategy() {
 		lastShotX = -1;
 		lastShotY = -1;
 		rand = new Random();
 	}
 
-	public CrossComputerStrategy getInstance() {
+	public static CrossComputerStrategy getInstance() {
 		return instance;
 	}
 	

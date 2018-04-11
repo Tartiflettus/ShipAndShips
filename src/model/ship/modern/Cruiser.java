@@ -17,5 +17,10 @@ public class Cruiser extends Ship {
 		nbCasesTouched = 0;
 		isPlaced = false;
 	}
+	
+	@Override
+	public String toString() {
+		return "Cruiser";
+	}
 
 }
