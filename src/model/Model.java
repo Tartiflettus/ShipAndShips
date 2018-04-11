@@ -31,7 +31,7 @@ public class Model extends Observable {
 
 	public final static int PLAYER = 1, PC = 0;
 	private int currentPlayer;
-	private GameState gamestate = GameState.PLACEMENT;
+	private GameState gameState = GameState.PLACEMENT;
 	
 	private int sizeBattleField;
 
@@ -60,7 +60,7 @@ public class Model extends Observable {
 	}
 	
 	public void newGame(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {
-		gamestate = GameState.PLACEMENT;
+		gameState = GameState.PLACEMENT;
 		ally = new BattleField(sizeBattleField);
 		opponent = new BattleField(sizeBattleField);
 
@@ -142,6 +142,39 @@ public class Model extends Observable {
 
 		return success;
 	}
+	
+	
+	/**
+	 * check if an ally case is touched
+	 * @param x absissa
+	 * @param y ordinate
+	 * @return whether this case is touched
+	 */
+	public boolean allyTouched(int x, int y) {
+		try {
+			return ally.touched(x, y);
+		} catch (NotInFieldException e) {
+			System.err.println("Checking if ally touched out of field");
+		}
+		return false;
+	}
+	
+	/**
+	 * check if an opponent case is touched
+	 * @param x absissa
+	 * @param y ordinate
+	 * @return whether this case is touched
+	 */
+	public boolean opponentTouched(int x, int y) {
+		try {
+			return opponent.touched(x, y);
+		} catch (NotInFieldException e) {
+			System.err.println("Checking if opponent touched out of field");
+		}
+		return false;
+	}
+	
+	
 
 	/**
 	 * Execute the computer placement strategy of the ships
@@ -217,7 +250,16 @@ public class Model extends Observable {
 	 * @return state of the game
 	 */
 	public GameState getGameState() {
-		return gamestate;
+		return gameState;
+	}
+	
+	
+	/**
+	 * Set the game state
+	 * @param gs new game state
+	 */
+	public void setGameState(GameState gs) {
+		gameState = gs;
 	}
 	
 	
@@ -228,5 +270,6 @@ public class Model extends Observable {
 	public ShipFactory getShipFactory() {
 		return shipFactory;
 	}
+
 
 }

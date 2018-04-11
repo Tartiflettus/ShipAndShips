@@ -23,8 +23,7 @@ public class AllyListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if(model.getGameState() == Model.GameState.PLACEMENT) {
-			//model.placeShip(ship, x, y);
-			
+			model.placeShip(field.getCurrentShip(), x, y);
 		}
 	}
 
