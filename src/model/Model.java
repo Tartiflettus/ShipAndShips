@@ -20,8 +20,12 @@ import model.strategy.PlacementStrategy;
  */
 public class Model extends Observable {
 	
+	public enum GameState{PLACEMENT, IN_GAME};
+	
 	public final static int PLAYER = 1, PC = 0;
 	private int currentPlayer;
+	private GameState gamestate = GameState.PLACEMENT;
+	
 	
 	private ModelDAO dao;
 	private ShipFactory shipFactory;
@@ -168,6 +172,14 @@ public class Model extends Observable {
 
 	public void save() throws IOException {
 		
+	}
+	
+	/**
+	 * Access state of the game
+	 * @return state of the game
+	 */
+	public GameState getGameState() {
+		return gamestate;
 	}
 
 }
