@@ -149,7 +149,7 @@ public class BattleField {
 	public boolean placeShip(Ship s) throws NotInFieldException {
 		final int x = s.getX(), y = s.getY();
 		final int w = s.getWidth(), h = s.getHeight();
-		final int xe = x+w, ye = y+h;
+		final int xe = x+w-1, ye = y+h-1;
 		
 		//can't place because a part is out of field
 		if(invalidPos(x, y) || invalidPos(xe, ye)) {
@@ -157,8 +157,8 @@ public class BattleField {
 		}
 		
 		//check if a case is already occupied
-		for(int xi=x; xi < xe; xi++) {
-			for(int yi=x; yi < ye; yi++) {
+		for(int xi=x; xi <= xe; xi++) {
+			for(int yi=x; yi <= ye; yi++) {
 				if(getShip(xi, yi) != null){
 					return false;
 				}

@@ -63,7 +63,8 @@ public abstract class Ship {
 	 * @return true if we can touched the ship at the position (x,y)
 	 */
 	public boolean isDestructible(int x, int y) {
-		if((x >= this.x && x < (this.x + width)) && (y >= this.y && y < (this.y + height))) {
+		if((x >= this.x && x < (this.x + width)) 
+				&& (y >= this.y && y < (this.y + height))) {
 			return true;
 		}
 		return false;
