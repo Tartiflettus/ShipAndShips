@@ -133,6 +133,13 @@ public class BattleField {
 		return true;
 	}
 	
+
+	public String parse(){
+		return null;
+	}
+
+	
+	
 	/**
 	 * Place a ship at the given position
 	 * @param s ship to be placed

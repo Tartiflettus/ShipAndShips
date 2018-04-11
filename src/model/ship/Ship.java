@@ -126,7 +126,12 @@ public abstract class Ship {
 	}
 	
 	
-	
+	public String parse(){
+		StringBuilder buff = new StringBuilder("");
+		
+		
+		return buff.toString();
+	}
 	
 
 }

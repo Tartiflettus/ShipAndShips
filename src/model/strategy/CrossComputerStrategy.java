@@ -117,4 +117,10 @@ public class CrossComputerStrategy implements ComputerStrategy {
 		}
 	}
 
+	@Override
+	public String parse() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

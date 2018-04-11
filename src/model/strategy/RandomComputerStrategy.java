@@ -39,4 +39,11 @@ public class RandomComputerStrategy implements ComputerStrategy {
 		}
 		b.receiveShot(x, y);
 	}
+
+	@Override
+	public String parse() {
+		return null;
+	}
+
+
 }

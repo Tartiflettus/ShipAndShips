@@ -2,6 +2,7 @@ package model;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Observable;
 
@@ -23,20 +24,20 @@ import model.strategy.RandomComputerStrategy;
  * @author PUBC
  *
  */
-public class Model extends Observable {
 
-	public enum GameState {
-		PLACEMENT, IN_GAME
-	};
-
-	public final static int PLAYER = 1, PC = 0;
+public class Model extends Observable implements Serializable {
+	
+	public enum GameState{PLACEMENT, IN_GAME};
+	
+	public final transient static int PLAYER = 1, PC = 0;
+	
 	private int currentPlayer;
 	private GameState gameState = GameState.PLACEMENT;
 	
+	transient private ModelDAO dao;
+	transient private ShipFactory shipFactory;
+	
 	private int sizeBattleField;
-
-	private ModelDAO dao;
-	private ShipFactory shipFactory;
 	private ComputerStrategy strat;
 	private PlacementStrategy placement;
 	
@@ -226,6 +227,7 @@ public class Model extends Observable {
 	/**
 	 * change the current player
 	 */
+
 	private void endTurn() {
 		if (currentPlayer == PC) {
 			currentPlayer = PLAYER;
@@ -234,6 +236,39 @@ public class Model extends Observable {
 		}
 	}
 
+	/**
+	 * sauvegarde l'état actuel du jeu dans le fichier de chemin fn.souss par l'intermediaire du DAO
+	 * @param fn
+	 * @throws IOException
+	 */
+	
+	public void save(String fn) throws IOException {	
+		
+		dao.save(this, fn);
+		
+	}
+	
+	/**
+	 * charge l'objet Model du fichier fn et set les champs de l'objet dans le model actuel
+	 * @param fn
+	 * @throws IOException
+	 */
+	
+	public void load(String fn) throws IOException{
+		
+		Model info = dao.load(fn);
+		
+		gameState = info.getGameState();
+		currentPlayer = info.currentPlayer();
+		ally = info.getAlly();
+		opponent = info.getOpponent();
+		strat = info.getStrat();
+		placement = info.getPlacement();
+		sizeBattleField = info.getSizeBattleField();
+		
+		
+	}
+	
 	/**
 	 * 
 	 * @return true if the current player is the Human ; false if it's the computer
@@ -249,9 +284,27 @@ public class Model extends Observable {
 	public BattleField getOpponent() {
 		return opponent;
 	}
+	
+	public ComputerStrategy getStrat(){
+		return strat;
+	}
+	
+	public PlacementStrategy getPlacement(){
+		return placement;
+	}
+	
+	public int getSizeBattleField(){
+		return sizeBattleField;
+	}
 
-	public void save() throws IOException {
 
+	public String parse(){
+		StringBuilder buff = new StringBuilder("");
+		
+		buff.append(currentPlayer+"	"+strat.parse()+"	"+placement.parse()+"	"+ally.parse()+"	"+opponent.parse());
+		
+		return buff.toString();
+	
 	}
 
 	/**
