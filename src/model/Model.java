@@ -8,9 +8,12 @@ import exception.NotInFieldException;
 import exception.NotPlaceableException;
 import exception.ShipException;
 import model.ship.Ship;
+import model.ship.factory.ModernShipFactory;
 import model.ship.factory.ShipFactory;
 import model.strategy.ComputerStrategy;
+import model.strategy.PlacementRandomStrategy;
 import model.strategy.PlacementStrategy;
+import model.strategy.RandomComputerStrategy;
 
 
 /**
@@ -35,9 +38,14 @@ public class Model extends Observable {
 	private BattleField ally, opponent;
 	
 	public Model() {
+		//defaultvalues
 		int sizeBattleField = 10;
 		ally = new BattleField(sizeBattleField);
 		opponent = new BattleField(sizeBattleField);
+		
+		shipFactory = ModernShipFactory.getInstance();
+		strat = RandomComputerStrategy.getInstance();
+		placement = PlacementRandomStrategy.getInstance();
 	}
 	
 	public Model(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {
