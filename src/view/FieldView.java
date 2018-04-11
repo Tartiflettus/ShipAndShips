@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -54,7 +55,9 @@ public class FieldView extends JFrame implements Observer {
 	
 	// INTERFACE TO PLACE A SHIP
 	private JComboBox<Ship> comboShip = new JComboBox<>();
+	private List<Ship> shipsNoPlaced;
 	
+	private JButton play;	
 
 	public FieldView(Model mod) {
 		model = mod;
@@ -62,7 +65,9 @@ public class FieldView extends JFrame implements Observer {
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(600, 600));
-
+		
+		shipsNoPlaced = model.getShipFactory().getShips();
+		
 		// MENU
 		// new game
 		file.add(newGame);
@@ -112,12 +117,24 @@ public class FieldView extends JFrame implements Observer {
 		strategy.add(random);
 		
 		//INTERFACE TO PLACE A SHIP
-		for(Ship s : model.getShipFactory().getShips()) {
+		for(Ship s : shipsNoPlaced) {
 			comboShip.addItem(s);
 		}
 		shipsPanel.add(comboShip);
 		add(shipsPanel, BorderLayout.CENTER);
 
+		//button play
+		play = new JButton("Play!");
+		play.setEnabled(false);
+		play.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//faire passer le model en mode play
+				model.setGameState("play");
+			}
+		});
+		shipsPanel.add(play);
 		
 		// --
 		pack();
@@ -152,8 +169,12 @@ public class FieldView extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-
+		//play available or not
+		if(shipsNoPlaced.isEmpty()) {
+			play.setEnabled(true);
+		}else {
+			play.setEnabled(false);
+		}
 	}
 
 }

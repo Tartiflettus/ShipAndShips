@@ -225,4 +225,15 @@ public class Model extends Observable {
 		return shipFactory;
 	}
 
+	public void setGameState(String s) {
+		switch(s){
+		case "play" : 
+			gamestate = GameState.IN_GAME;
+			break;
+		case "placement" :
+			gamestate = GameState.PLACEMENT;
+			break;
+		}
+	}
+
 }
