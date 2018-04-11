@@ -28,7 +28,7 @@ import view.listener.StrategyListener;
 public class FieldView extends JFrame implements Observer {
 
 	private Model model;
-	private Ship currentShip;
+	//private Ship currentShip;
 	private List<Ship> shipsNoPlaced;
 
 	
@@ -56,14 +56,17 @@ public class FieldView extends JFrame implements Observer {
 	private JButton play;
 
 	public FieldView(Model mod) {
+		
 		model = mod;
+		mod.addObserver(this);
+		
 		setTitle("The Legendary Ships Battle");
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(600, 600));
 		
 		shipsNoPlaced = model.getShipFactory().getShips();
-		currentShip = shipsNoPlaced.get(0);
+		//currentShip = shipsNoPlaced.get(0);
 		
 		// MENU
 		// new game
@@ -125,8 +128,8 @@ public class FieldView extends JFrame implements Observer {
 		rotate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				currentShip.changeOrientation();
-				rotate.setText(orientationToString(currentShip.OrientationChanged()));
+				//currentShip.changeOrientation();
+				rotate.setText(rotate.getText().equals("vertical") ? "horizontal" : "vertical");
 			}
 		});
 		shipsPanel.add(rotate);
@@ -152,29 +155,33 @@ public class FieldView extends JFrame implements Observer {
 	}
 
 	private void battleFieldAlly() {
+		ally.removeAll();
 		int size = model.getAlly().size();
 		ally.setLayout(new GridLayout(size, size));
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		for (int i = 0; i < size; i++) { //y
+			for (int j = 0; j < size; j++) { //x
 				JButton b = new JButton();
-				if(model.allyTouched(i, j)) {
+				final Ship s = model.getAllyShip(j, i);
+				if(s != null) {
 					b.setEnabled(false);
+					b.setText(s.letter());
 				}
 				ally.add(b);
-				b.addActionListener(new AllyListener(model, this, i, j));
+				b.addActionListener(new AllyListener(model, this, j, i));
 			}
 		}
 
 	}
 
 	private void battleFieldOpponent() {
+		opponent.removeAll();
 		int size = model.getOpponent().size();
 		opponent.setLayout(new GridLayout(size, size));
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				JButton b = new JButton();
+		for (int i = 0; i < size; i++) { //y
+			for (int j = 0; j < size; j++) { //x
+				JButton b = new JButton(/*j + " ; " + i*/);
 				opponent.add(b);
-				b.addActionListener(new OpponentListener(model, i, j));
+				b.addActionListener(new OpponentListener(model, j, i));
 			}
 		}
 
@@ -194,11 +201,14 @@ public class FieldView extends JFrame implements Observer {
 		}else {
 			play.setEnabled(false);
 		}
+		
+		battleFieldAlly();
+		battleFieldOpponent();
 	}
 	
 	
 	public Ship getCurrentShip() {
-		return currentShip;
+		return (Ship) comboShip.getSelectedItem();
 	}
 	
 	private String orientationToString(boolean orientationChanged) {
@@ -206,6 +216,10 @@ public class FieldView extends JFrame implements Observer {
 			return "horizontal";
 		}
 		return "vertical";
+	}
+	
+	public boolean currentOrientationchanged() {
+		return rotate.getText().equals("vertical") ? false : true;
 	}
 
 }

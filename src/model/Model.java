@@ -175,6 +175,16 @@ public class Model extends Observable {
 	}
 	
 	
+	
+	public Ship getAllyShip(int x, int y) {
+		try {
+			return ally.getShip(x, y);
+		} catch (NotInFieldException e) {
+			System.err.println("Searching ally ship out of field");
+		}
+		return null;
+	}
+	
 
 	/**
 	 * Execute the computer placement strategy of the ships

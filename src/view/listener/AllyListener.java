@@ -2,6 +2,7 @@ package view.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observer;
 
 import model.Model;
 import model.ship.Ship;
@@ -23,7 +24,12 @@ public class AllyListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if(model.getGameState() == Model.GameState.PLACEMENT) {
+			final Ship s = field.getCurrentShip();
+			if(field.currentOrientationchanged()) {
+				s.changeOrientation();
+			}
 			model.placeShip(field.getCurrentShip(), x, y);
+			System.out.println("");
 		}
 	}
 

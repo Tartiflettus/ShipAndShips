@@ -2,6 +2,7 @@ package view.listener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observer;
 
 import model.Model;
 

@@ -9,6 +9,11 @@ public abstract class Ship {
 	protected int nbCasesTouched;
 	protected boolean isPlaced;
 	
+	
+	public abstract String letter();
+	
+	
+	
 	/**
 	 * 
 	 * @return true the Orientation is different from the initial orientation
