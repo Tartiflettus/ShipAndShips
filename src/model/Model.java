@@ -29,7 +29,7 @@ public class Model extends Observable implements Serializable {
 	
 	public enum GameState{PLACEMENT, IN_GAME};
 	
-	public final transient static int PLAYER = 1, PC = 0;
+	public final transient static int PLAYER = 0, PC = 1;
 	
 	private int currentPlayer;
 	private GameState gameState = GameState.PLACEMENT;
@@ -131,10 +131,8 @@ public class Model extends Observable implements Serializable {
 				success = ally.receiveShot(x, y);
 				break;
 			}
-			if (success) {
-				endTurn();
-				update();
-			}
+			endTurn();
+			update();
 
 			return success;
 		} catch (NotInFieldException e) {
@@ -215,6 +213,7 @@ public class Model extends Observable implements Serializable {
 			boolean everythingIsOk = ally.placeShip(ship);
 			if (everythingIsOk) {
 				update();
+				return true;
 			} else {
 				return false;
 			}

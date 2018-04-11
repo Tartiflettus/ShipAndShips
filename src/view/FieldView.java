@@ -180,7 +180,10 @@ public class FieldView extends JFrame implements Observer {
 		opponent.setLayout(new GridLayout(size, size));
 		for (int i = 0; i < size; i++) { //y
 			for (int j = 0; j < size; j++) { //x
-				JButton b = new JButton(/*j + " ; " + i*/);
+				JButton b = new JButton();
+				if(model.opponentTouched(j, i)) {
+					b.setText("X");
+				}
 				opponent.add(b);
 				b.addActionListener(new OpponentListener(model, j, i));
 			}
@@ -212,15 +215,16 @@ public class FieldView extends JFrame implements Observer {
 		return (Ship) comboShip.getSelectedItem();
 	}
 	
-	private String orientationToString(boolean orientationChanged) {
-		if(orientationChanged) {
-			return "horizontal";
-		}
-		return "vertical";
-	}
 	
 	public boolean currentOrientationchanged() {
 		return rotate.getText().equals("vertical") ? false : true;
+	}
+	
+	public void removeShip(Ship s) {
+		shipsNoPlaced.remove(s);
+		if(shipsNoPlaced.isEmpty()) {
+			play.setEnabled(true);
+		}
 	}
 
 }
