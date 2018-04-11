@@ -15,7 +15,7 @@ public class RandomComputerStrategy implements ComputerStrategy {
 	private static RandomComputerStrategy instance = new RandomComputerStrategy();
 	private Random rand;
 	
-	public RandomComputerStrategy getInstance() {
+	public static RandomComputerStrategy getInstance() {
 		return instance;
 	}
 	

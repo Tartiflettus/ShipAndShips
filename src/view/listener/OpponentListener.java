@@ -18,8 +18,8 @@ public class OpponentListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// SI ETAT DU JEU != PLACEMENT DES BATEAUX //TODO
-		if(!model.won() && model.currentPlayer() == Model.PLAYER && buttonIsActive == true) {
+		if(!model.won() && model.currentPlayer() == Model.PLAYER && model.getGameState() == Model.GameState.IN_GAME 
+				&& buttonIsActive == true) {
 			model.shot(x, y);
 			buttonIsActive = false;
 		}

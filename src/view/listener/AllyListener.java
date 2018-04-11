@@ -17,8 +17,7 @@ public class AllyListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// SI ETAT DU JEU = PLACER LES BATEAUX // TODO 
-		if(!model.won()) {
+		if(model.getGameState() == Model.GameState.PLACEMENT) {
 			//model.placeShip(ship, x, y);
 			
 		}
