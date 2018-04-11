@@ -36,10 +36,11 @@ public class Model extends Observable {
 	private PlacementStrategy placement;
 	
 	private BattleField ally, opponent;
+	private int sizeBattleField;
 	
 	public Model() {
 		//defaultvalues
-		int sizeBattleField = 10;
+		sizeBattleField = 10;
 		ally = new BattleField(sizeBattleField);
 		opponent = new BattleField(sizeBattleField);
 		
@@ -49,7 +50,11 @@ public class Model extends Observable {
 	}
 	
 	public Model(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {
-		int sizeBattleField = 10;
+		newGame(age, strategy, placementStrat);
+	}
+	
+	public void newGame(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {
+		gamestate = GameState.PLACEMENT;
 		ally = new BattleField(sizeBattleField);
 		opponent = new BattleField(sizeBattleField);
 		
@@ -57,6 +62,7 @@ public class Model extends Observable {
 		strat = strategy;
 		placement = placementStrat;
 	}
+	
 	
 	/**
 	 * @return true if the player or the computer won

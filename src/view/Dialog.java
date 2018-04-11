@@ -16,6 +16,12 @@ import javax.swing.JPanel;
 
 import model.Model;
 import model.ship.factory.ModernShipFactory;
+import model.ship.factory.ShipFactory;
+import model.strategy.ComputerStrategy;
+import model.strategy.CrossComputerStrategy;
+import model.strategy.PlacementRandomStrategy;
+import model.strategy.PlacementStrategy;
+import model.strategy.RandomComputerStrategy;
 
 public class Dialog extends JDialog {
 	private static final String[] AGE_BOAT = {"Modern"};
@@ -89,11 +95,7 @@ public class Dialog extends JDialog {
     JButton okBouton = new JButton("OK");
     okBouton.addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent arg0) {        
-        //model.newGame();
-        // TODO
-        model.setPeriod(ModernShipFactory.getInstance());
-        //model.setComputerStrategy();
-        //model.setPlacementStrategy();
+    	  model.newGame(getAge(age), getStrategy(strategy),  getPlacement(placement));
         setVisible(false);
       }
     });
@@ -121,6 +123,36 @@ public class Dialog extends JDialog {
     this.getContentPane().add(control, BorderLayout.SOUTH);
 
   }  
+  
+  //GETTER
+  
+  private ShipFactory getAge(JComboBox age) {
+	  String a = (String) age.getSelectedItem();
+	  if (a.equals("Modern")) {
+		  return ModernShipFactory.getInstance();
+	  }
+	  return null;
+  }
+  
+  private ComputerStrategy getStrategy(JComboBox strategy) {
+	  String s = (String) strategy.getSelectedItem();
+	  if (s.equals("Random")) {
+		  return RandomComputerStrategy.getInstance();
+	  }
+	  if (s.equals("Cross")) {
+		  return CrossComputerStrategy.getInstance();
+	  }
+	  return null;
+  }
+  
+  
+  private PlacementStrategy getPlacement(JComboBox placement) {
+	  String s = (String) placement.getSelectedItem();
+	  if (s.equals("Random")) {
+		  return PlacementRandomStrategy.getInstance();
+	  }
+	  return null;
+  }
   
   
 }

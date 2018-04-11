@@ -24,7 +24,7 @@ public class CrossComputerStrategy implements ComputerStrategy {
 		rand = new Random();
 	}
 
-	public CrossComputerStrategy getInstance() {
+	public static CrossComputerStrategy getInstance() {
 		return instance;
 	}
 	
