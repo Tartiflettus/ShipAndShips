@@ -22,8 +22,8 @@ public abstract class Ship {
 	 */
 	public void changeOrientation() {
 		int tmp = height;
-		width = tmp;
 		height = width;
+		width = tmp;
 	}
 	
 	/**

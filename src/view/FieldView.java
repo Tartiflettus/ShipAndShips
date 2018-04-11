@@ -52,8 +52,8 @@ public class FieldView extends JFrame implements Observer {
 	
 	// INTERFACE TO PLACE A SHIP
 	private JComboBox<Ship> comboShip = new JComboBox<>();
-	
-	private JButton play;	
+	private JButton rotate;
+	private JButton play;
 
 	public FieldView(Model mod) {
 		model = mod;
@@ -63,6 +63,7 @@ public class FieldView extends JFrame implements Observer {
 		setPreferredSize(new Dimension(600, 600));
 		
 		shipsNoPlaced = model.getShipFactory().getShips();
+		currentShip = shipsNoPlaced.get(0);
 		
 		// MENU
 		// new game
@@ -118,6 +119,17 @@ public class FieldView extends JFrame implements Observer {
 		}
 		shipsPanel.add(comboShip);
 		add(shipsPanel, BorderLayout.CENTER);
+		
+		//button rotate
+		rotate = new JButton("vertical");
+		rotate.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				currentShip.changeOrientation();
+				rotate.setText(orientationToString(currentShip.OrientationChanged()));
+			}
+		});
+		shipsPanel.add(rotate);
 
 		//button play
 		play = new JButton("Play!");
@@ -131,6 +143,8 @@ public class FieldView extends JFrame implements Observer {
 			}
 		});
 		shipsPanel.add(play);
+		
+		
 		
 		// --
 		pack();
@@ -185,6 +199,13 @@ public class FieldView extends JFrame implements Observer {
 	
 	public Ship getCurrentShip() {
 		return currentShip;
+	}
+	
+	private String orientationToString(boolean orientationChanged) {
+		if(orientationChanged) {
+			return "horizontal";
+		}
+		return "vertical";
 	}
 
 }
