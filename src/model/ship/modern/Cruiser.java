@@ -3,6 +3,11 @@ package model.ship.modern;
 import model.ship.Ship;
 
 
+/**
+ * A cruiser from the modern period
+ * @author Maureen
+ *
+ */
 public class Cruiser extends Ship {
 
 	public Cruiser() {

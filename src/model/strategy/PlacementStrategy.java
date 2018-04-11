@@ -1,13 +1,16 @@
 package model.strategy;
 
-import exception.NotPlaceableException;
+import java.util.List;
+
+import exception.ShipException;
 import model.BattleField;
 import model.ship.Ship;
 
 public interface PlacementStrategy {
-
-	public void placeShips(BattleField bf, Ship... ships) throws NotPlaceableException;
 	
 	public String parse();
+	
+	public void placeShips(BattleField bf, List<Ship> ships) throws ShipException;
+
 
 }
