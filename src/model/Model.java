@@ -39,6 +39,7 @@ public class Model extends Observable {
 	private ShipFactory shipFactory;
 	private ComputerStrategy strat;
 	private PlacementStrategy placement;
+	
 
 	private BattleField ally, opponent;
 
@@ -67,6 +68,9 @@ public class Model extends Observable {
 		strat = strategy;
 		placement = placementStrat;
 	}
+	
+	
+	
 
 	/**
 	 * @return true if the player or the computer won

@@ -22,7 +22,6 @@ import javax.swing.KeyStroke;
 
 import model.Model;
 import model.ship.Ship;
-import model.ship.factory.ModernShipFactory;
 import view.listener.AllyListener;
 import view.listener.OpponentListener;
 import view.listener.StrategyListener;
@@ -30,9 +29,8 @@ import view.listener.StrategyListener;
 public class FieldView extends JFrame implements Observer {
 
 	private Model model;
-
-	//ship the user is currently placing
 	private Ship currentShip;
+
 	
 	// MENU
 	private JMenuBar menu = new JMenuBar();
@@ -131,7 +129,7 @@ public class FieldView extends JFrame implements Observer {
 			for (int j = 0; j < size; j++) {
 				JButton b = new JButton();
 				ally.add(b);
-				b.addActionListener(new AllyListener(model, i, j));
+				b.addActionListener(new AllyListener(model, this, i, j));
 			}
 		}
 
@@ -152,8 +150,7 @@ public class FieldView extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 }
