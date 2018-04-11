@@ -32,6 +32,8 @@ public class Model extends Observable {
 	public final static int PLAYER = 1, PC = 0;
 	private int currentPlayer;
 	private GameState gamestate = GameState.PLACEMENT;
+	
+	private int sizeBattleField;
 
 	private ModelDAO dao;
 	private ShipFactory shipFactory;
@@ -43,6 +45,7 @@ public class Model extends Observable {
 	public Model() {
 		// defaultvalues
 		int sizeBattleField = 10;
+
 		ally = new BattleField(sizeBattleField);
 		opponent = new BattleField(sizeBattleField);
 
@@ -52,7 +55,11 @@ public class Model extends Observable {
 	}
 
 	public Model(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {
-		int sizeBattleField = 10;
+		newGame(age, strategy, placementStrat);
+	}
+	
+	public void newGame(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {
+		gamestate = GameState.PLACEMENT;
 		ally = new BattleField(sizeBattleField);
 		opponent = new BattleField(sizeBattleField);
 

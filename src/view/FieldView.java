@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import model.Model;
+import model.ship.Ship;
 import view.listener.AllyListener;
 import view.listener.OpponentListener;
 import view.listener.StrategyListener;
@@ -29,6 +30,9 @@ public class FieldView extends JFrame implements Observer {
 
 	private Model model;
 
+	//ship the user is currently placing
+	private Ship currentShip;
+	
 	// MENU
 	private JMenuBar menu = new JMenuBar();
 	private JMenu file = new JMenu("File");
