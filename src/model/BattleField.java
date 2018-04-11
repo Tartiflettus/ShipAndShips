@@ -19,7 +19,12 @@ public class BattleField {
 	private boolean[][] touched;
 	
 	
-	
+	/**
+	 * 
+	 * @param x abscissa of the position
+	 * @param y ordinate of theposition
+	 * @return true if the position is invalid
+	 */
 	private boolean invalidPos(int x, int y) {
 		return x < 0 || x >= size() || y < 0 || y >= size();
 	}
@@ -52,7 +57,8 @@ public class BattleField {
 	 */
 	public boolean receiveShot(int x, int y) throws NotInFieldException {
 		if(invalidPos(x, y)) throw new NotInFieldException();
-			
+		
+		touched[x][y] = true;
 		for(Ship s : ships) {
 			if(s.receiveShot(x, y)) {
 				return true;
@@ -142,26 +148,25 @@ public class BattleField {
 	 */
 	public boolean placeShip(Ship s) throws NotInFieldException {
 		final int x = s.getX(), y = s.getY();
-		final boolean horizontal = s.OrientationChanged();
 		final int w = s.getWidth(), h = s.getHeight();
 		final int xe = x+w, ye = y+h;
 		
-		if(horizontal) {
-			for(int i=x; i < Math.min(xe, size()); i++) {
-				if(getShip(i, y) != null) {
-					return false;
-				}
-			}
-		}else {
-			for(int i=y; i < Math.min(ye, size()); i++) {
-				if(getShip(x, i) != null) {
+		//can't place because a part is out of field
+		if(invalidPos(x, y) || invalidPos(xe, ye)) {
+			throw new NotInFieldException();
+		}
+		
+		//check if a case is already occupied
+		for(int xi=x; xi < xe; xi++) {
+			for(int yi=x; yi < ye; yi++) {
+				if(getShip(xi, yi) != null){
 					return false;
 				}
 			}
 		}
 		
+		//everything is right, can be placed
 		ships.add(s);
 		return true;
 	}
-
 }
