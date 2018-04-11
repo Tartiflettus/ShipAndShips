@@ -17,5 +17,10 @@ public class Gondola extends Ship {
 		nbCasesTouched = 0;
 		isPlaced = false;
 	}
+	
+	@Override
+	public String toString() {
+		return "Gondola";
+	}
 
 }

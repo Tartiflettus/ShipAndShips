@@ -10,6 +10,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -19,6 +20,7 @@ import javax.swing.KeyStroke;
 
 import model.Model;
 import model.ship.Ship;
+import model.ship.factory.ModernShipFactory;
 import view.listener.AllyListener;
 import view.listener.OpponentListener;
 
@@ -42,6 +44,10 @@ public class FieldView extends JFrame implements Observer {
 	// PANELS
 	private JPanel ally = new JPanel();
 	private JPanel opponent = new JPanel();
+	private JPanel shipsPanel = new JPanel();
+	
+	// INTERFACE TO PLACE A SHIP
+	private JComboBox<Ship> comboShip = new JComboBox<>();
 	
 
 	public FieldView(Model mod) {
@@ -87,6 +93,14 @@ public class FieldView extends JFrame implements Observer {
 		add(opponent, BorderLayout.NORTH);
 		opponent.setPreferredSize(new Dimension(250,250));
 		battleFieldOpponent();
+		
+		//INTERFACE TO PLACE A SHIP
+		for(Ship s : model.getShipFactory().getShips()) {
+			comboShip.addItem(s);
+		}
+		shipsPanel.add(comboShip);
+		add(shipsPanel, BorderLayout.CENTER);
+		
 		
 		
 		//--

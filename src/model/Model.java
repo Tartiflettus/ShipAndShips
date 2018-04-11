@@ -195,5 +195,14 @@ public class Model extends Observable {
 	public GameState getGameState() {
 		return gamestate;
 	}
+	
+	
+	/**
+	 * Access the ship factory of this model
+	 * @return ship factory of this model
+	 */
+	public ShipFactory getShipFactory() {
+		return shipFactory;
+	}
 
 }
