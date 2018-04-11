@@ -1,6 +1,7 @@
 package model;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Observable;
 
@@ -21,17 +22,18 @@ import model.strategy.RandomComputerStrategy;
  * @author PUBC
  *
  */
-public class Model extends Observable {
+public class Model extends Observable implements Serializable {
 	
 	public enum GameState{PLACEMENT, IN_GAME};
 	
-	public final static int PLAYER = 1, PC = 0;
+	public final transient static int PLAYER = 1, PC = 0;
 	private int currentPlayer;
 	private GameState gamestate = GameState.PLACEMENT;
 	
 	
-	private ModelDAO dao;
-	private ShipFactory shipFactory;
+	transient private ModelDAO dao;
+	transient private ShipFactory shipFactory;
+	
 	private ComputerStrategy strat;
 	private PlacementStrategy placement;
 	
@@ -163,15 +165,41 @@ public class Model extends Observable {
 	}
 	
 	/**
+	 * sauvegarde l'état actuel du jeu dans le fichier de chemin fn.souss par l'intermediaire du DAO
+	 * @param fn
+	 * @throws IOException
+	 */
+	
+	public void save(String fn) throws IOException {	
+		
+		dao.save(this, fn);
+		
+	}
+	
+	/**
+	 * charge l'objet Model du fichier fn et set les champs de l'objet dans le model actuel
+	 * @param fn
+	 * @throws IOException
+	 */
+	
+	public void load(String fn) throws IOException{
+		
+		Model info = dao.load(fn);
+		
+		info.getGameState();
+		info.currentPlayer();
+		info.getAlly();
+		info.getOpponent();
+		
+		
+	}
+	
+	/**
 	 * 
 	 * @return true if the current player is the Human ; false if it's the computer
 	 */
 	public int currentPlayer() {
 		return currentPlayer;
-	}
-	
-	public void save() throws IOException {	
-		
 	}
 	
 	public BattleField getAlly() {
@@ -180,6 +208,14 @@ public class Model extends Observable {
 
 	public BattleField getOpponent() {
 		return opponent;
+	}
+	
+	public ComputerStrategy getStrat(){
+		return strat;
+	}
+	
+	public PlacementStrategy getPlacement(){
+		return placement;
 	}
 
 	public String parse(){
