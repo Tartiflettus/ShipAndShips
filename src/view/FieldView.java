@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -53,6 +54,10 @@ public class FieldView extends JFrame implements Observer {
 	private JComboBox<Ship> comboShip = new JComboBox<>();
 	private JButton rotate;
 	private JButton play;
+	
+	// ICONS
+	ImageIcon imgWin;
+	ImageIcon imgLose;
 
 	public FieldView(Model mod) {
 		
@@ -149,6 +154,9 @@ public class FieldView extends JFrame implements Observer {
 		
 		
 		// --
+		
+		imgWin = new ImageIcon("res/win.jpg");
+		imgLose = new ImageIcon("res/lose.jpg");
 		pack();
 		setVisible(true);
 	}
@@ -233,11 +241,11 @@ public class FieldView extends JFrame implements Observer {
 		
 		JOptionPane jop = new JOptionPane();
 		if(model.won() && model.currentPlayer() == Model.PLAYER) {
-			jop.showMessageDialog(null, "You Win", "Victory", JOptionPane.INFORMATION_MESSAGE);
-			
+			jop.showMessageDialog(null, "You Win", "Victory", JOptionPane.INFORMATION_MESSAGE, imgWin);
+			//jop.setIcon(imgWin);
 		}
 		if (model.won() && model.currentPlayer() == Model.PC) {
-			jop.showMessageDialog(null, "You Lose", "Defeat", JOptionPane.INFORMATION_MESSAGE);
+			jop.showMessageDialog(null, "You Lose", "Defeat", JOptionPane.INFORMATION_MESSAGE, imgLose);
 			
 		}
 		
