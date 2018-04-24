@@ -53,7 +53,6 @@ public class PlacementRandomStrategy implements PlacementStrategy {
 					placeable = true;
 					s.setPosition(x, y);
 					bf.placeShip(s);
-					System.out.println("1 " + x +" " + y);
 				}
 				cptLoop ++;
 				if(cptLoop == 200) throw new NotPlaceableException();

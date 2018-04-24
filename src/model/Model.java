@@ -256,6 +256,14 @@ public class Model extends Observable implements Serializable {
 			currentPlayer = PLAYER;
 		} else {
 			currentPlayer = PC;
+			try {
+				if(!won()) {
+					strat.shot(ally);
+					currentPlayer = PLAYER;
+				}
+			} catch (NotInFieldException e) {
+				System.err.println("Computer error when he wants to shot us");
+			}
 		}
 	}
 

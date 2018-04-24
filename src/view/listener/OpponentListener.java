@@ -19,7 +19,7 @@ public class OpponentListener implements ActionListener {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(model.currentPlayer() == Model.PLAYER && model.getGameState() == Model.GameState.IN_GAME 
+		if(model.currentPlayer() == Model.PLAYER && model.getGameState() == Model.GameState.IN_GAME && !model.won()
 				&& buttonIsActive == true) {
 			model.shot(x, y);
 			buttonIsActive = false;
