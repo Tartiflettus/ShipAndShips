@@ -25,11 +25,11 @@ public class AllyListener implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if(model.getGameState() == Model.GameState.PLACEMENT) {
 			final Ship s = field.getCurrentShip();
-			if(field.currentOrientationchanged()) {
-				s.changeOrientation();
-			}
-			if(model.placeShip(field.getCurrentShip(), x, y)) {
-				field.removeShip(s);
+			if(s != null) {
+				if(field.currentOrientationchanged()) {
+					s.changeOrientation();
+				}
+				model.placeShip(field.getCurrentShip(), x, y);
 			}
 		}
 	}

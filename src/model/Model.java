@@ -43,6 +43,9 @@ public class Model extends Observable implements Serializable {
 	
 
 	private BattleField ally, opponent;
+	
+	//private Ship currentShip;
+	private List<Ship> shipsNoPlaced;
 
 	public Model() {
 		// defaultvalues
@@ -54,6 +57,7 @@ public class Model extends Observable implements Serializable {
 		shipFactory = ModernShipFactory.getInstance();
 		strat = RandomComputerStrategy.getInstance();
 		placement = PlacementRandomStrategy.getInstance();
+		shipsNoPlaced = getShipFactory().getShips();
 	}
 
 	public Model(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {
@@ -68,9 +72,13 @@ public class Model extends Observable implements Serializable {
 		shipFactory = age;
 		strat = strategy;
 		placement = placementStrat;
+		shipsNoPlaced = getShipFactory().getShips();
 	}
 	
-	
+
+	public List<Ship> getShipsNoPlaced() {
+		return shipsNoPlaced;
+	}
 	
 
 	/**
@@ -110,7 +118,7 @@ public class Model extends Observable implements Serializable {
 	/**
 	 * Notify Observers
 	 */
-	private void update() {
+	public void update() {
 		setChanged();
 		notifyObservers();
 	}
@@ -212,6 +220,7 @@ public class Model extends Observable implements Serializable {
 			ship.setPosition(x, y);
 			boolean everythingIsOk = ally.placeShip(ship);
 			if (everythingIsOk) {
+				shipsNoPlaced.remove(ship);
 				update();
 				return true;
 			} else {

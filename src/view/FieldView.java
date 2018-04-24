@@ -29,9 +29,6 @@ import view.listener.StrategyListener;
 public class FieldView extends JFrame implements Observer {
 
 	private Model model;
-	//private Ship currentShip;
-	private List<Ship> shipsNoPlaced;
-
 	
 	// MENU
 	private JMenuBar menu = new JMenuBar();
@@ -66,7 +63,6 @@ public class FieldView extends JFrame implements Observer {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(600, 600));
 		
-		shipsNoPlaced = model.getShipFactory().getShips();
 		//currentShip = shipsNoPlaced.get(0);
 		
 		// MENU
@@ -118,7 +114,7 @@ public class FieldView extends JFrame implements Observer {
 		strategy.add(random);
 		
 		//INTERFACE TO PLACE A SHIP
-		for(Ship s : shipsNoPlaced) {
+		for(Ship s : model.getShipsNoPlaced()) {
 			comboShip.addItem(s);
 		}
 		shipsPanel.add(comboShip);
@@ -183,24 +179,24 @@ public class FieldView extends JFrame implements Observer {
 				JButton b = new JButton();
 				if(model.opponentTouched(j, i)) {
 					b.setText("X");
+					b.setEnabled(false);
 				}
 				opponent.add(b);
 				b.addActionListener(new OpponentListener(model, j, i));
 			}
 		}
-
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		//update ship combobox
 		comboShip.removeAllItems();
-		for(Ship s : shipsNoPlaced) {
+		for(Ship s : model.getShipsNoPlaced()) {
 			comboShip.addItem(s);
 		}
 		
 		//play available or not
-		if(shipsNoPlaced.isEmpty()) {
+		if(model.getShipsNoPlaced().isEmpty()) {
 			play.setEnabled(true);
 		}else {
 			play.setEnabled(false);
@@ -208,6 +204,7 @@ public class FieldView extends JFrame implements Observer {
 		
 		battleFieldAlly();
 		battleFieldOpponent();
+		this.revalidate();
 	}
 	
 	
@@ -218,13 +215,6 @@ public class FieldView extends JFrame implements Observer {
 	
 	public boolean currentOrientationchanged() {
 		return rotate.getText().equals("vertical") ? false : true;
-	}
-	
-	public void removeShip(Ship s) {
-		shipsNoPlaced.remove(s);
-		if(shipsNoPlaced.isEmpty()) {
-			play.setEnabled(true);
-		}
 	}
 
 }
