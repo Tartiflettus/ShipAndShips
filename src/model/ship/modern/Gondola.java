@@ -22,5 +22,10 @@ public class Gondola extends Ship {
 	public String toString() {
 		return "Gondola";
 	}
+	
+	@Override
+	public String letter() {
+		return "G";
+	}
 
 }

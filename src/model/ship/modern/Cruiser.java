@@ -22,5 +22,10 @@ public class Cruiser extends Ship {
 	public String toString() {
 		return "Cruiser";
 	}
+	
+	@Override
+	public String letter() {
+		return "C";
+	}
 
 }

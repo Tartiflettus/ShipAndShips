@@ -95,7 +95,7 @@ class BattlefieldTest {
 	void testPlaceShipAlmostOOB() throws NotInFieldException {
 		BattleField b = new BattleField(10);
 		Cruiser c = new Cruiser();
-		c.setPosition(0, 1);
+		c.setPosition(0, 2);
 		assertTrue(b.placeShip(c));
 	}
 	

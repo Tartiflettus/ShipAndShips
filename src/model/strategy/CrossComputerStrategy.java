@@ -56,15 +56,18 @@ public class CrossComputerStrategy implements ComputerStrategy, Serializable {
 		while (!findShot) {
 			x = rand.nextInt(b.size());
 			y = rand.nextInt(b.size());
-			if (!somethingAround(b, x, y)) {
+			/*if (!somethingAround(b, x, y)) {
+				findShot = true;
+			}*/
+			if(!b.touched(x, y)) { // if we did'nt already shot this area
 				findShot = true;
 			}
+			System.out.println("Searching a good shot");
 		}
-		if (b.getShip(x, y) != null) {
+		if(b.receiveShot(x, y)) {
 			lastShotX = x;
 			lastShotY = y;
 		}
-		b.receiveShot(x, y);
 	}
 
 	/**
@@ -105,7 +108,7 @@ public class CrossComputerStrategy implements ComputerStrategy, Serializable {
 	private void finishHim(BattleField b) throws NotInFieldException {
 		// south
 		if (lastShotY + 1 < b.size() && !b.touched(lastShotX, lastShotY + 1)) {
-			b.receiveShot(lastShotX, lastShotY - 1);
+			b.receiveShot(lastShotX, lastShotY + 1);
 			// east
 		} else if (lastShotX + 1 < b.size() && !b.touched(lastShotX + 1, lastShotY)) {
 			b.receiveShot(lastShotX + 1, lastShotY);
@@ -115,6 +118,10 @@ public class CrossComputerStrategy implements ComputerStrategy, Serializable {
 			// north
 		} else if (lastShotY - 1 >= 0 && !b.touched(lastShotX, lastShotY - 1)) {
 			b.receiveShot(lastShotX, lastShotY - 1);
+		}else { // no direction is shotable
+			lastShotX = -1;
+			lastShotY = -1;
+			normalShot(b);
 		}
 	}
 

@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
@@ -20,6 +22,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
@@ -32,9 +35,6 @@ import view.listener.StrategyListener;
 public class FieldView extends JFrame implements Observer {
 
 	private Model model;
-	private Ship currentShip;
-	private List<Ship> shipsNoPlaced;
-
 	
 	// MENU
 	private JMenuBar menu = new JMenuBar();
@@ -63,15 +63,22 @@ public class FieldView extends JFrame implements Observer {
 	private final JFileChooser fcSave = new JFileChooser();
 	private final JFileChooser fcLoad = new JFileChooser();
 
+	// ICONS
+	ImageIcon imgWin;
+	ImageIcon imgLose;
+
+
 	public FieldView(Model mod) {
+		
 		model = mod;
+		mod.addObserver(this);
+		
 		setTitle("The Legendary Ships Battle");
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(600, 600));
 		
-		shipsNoPlaced = model.getShipFactory().getShips();
-		currentShip = shipsNoPlaced.get(0);
+		//currentShip = shipsNoPlaced.get(0);
 		
 		// MENU
 		// new game
@@ -144,7 +151,7 @@ public class FieldView extends JFrame implements Observer {
 		strategy.add(random);
 		
 		//INTERFACE TO PLACE A SHIP
-		for(Ship s : shipsNoPlaced) {
+		for(Ship s : model.getShipsNoPlaced()) {
 			comboShip.addItem(s);
 		}
 		shipsPanel.add(comboShip);
@@ -155,8 +162,8 @@ public class FieldView extends JFrame implements Observer {
 		rotate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				currentShip.changeOrientation();
-				rotate.setText(orientationToString(currentShip.OrientationChanged()));
+				//currentShip.changeOrientation();
+				rotate.setText(rotate.getText().equals("vertical") ? "horizontal" : "vertical");
 			}
 		});
 		shipsPanel.add(rotate);
@@ -169,6 +176,7 @@ public class FieldView extends JFrame implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//faire passer le model en mode play
+				model.placeShipComputer();
 				model.setGameState(Model.GameState.IN_GAME);
 			}
 		});
@@ -177,65 +185,112 @@ public class FieldView extends JFrame implements Observer {
 		
 		
 		// --
+		
+		imgWin = new ImageIcon("res/win.jpg");
+		imgLose = new ImageIcon("res/lose.jpg");
 		pack();
 		setVisible(true);
 	}
 
 	private void battleFieldAlly() {
+		ally.removeAll();
 		int size = model.getAlly().size();
 		ally.setLayout(new GridLayout(size, size));
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		for (int i = 0; i < size; i++) { //y
+			for (int j = 0; j < size; j++) { //x
 				JButton b = new JButton();
-				if(model.allyTouched(i, j)) {
+				final Ship s = model.getAllyShip(j, i);
+				if(s != null) {
 					b.setEnabled(false);
+					b.setText(s.letter());
+				}
+				if(model.allyTouched(j, i)) {
+					if(s != null){
+						b.setBackground(Color.RED);
+					} else {
+						b.setBackground(Color.GREEN);
+					}					
 				}
 				ally.add(b);
-				b.addActionListener(new AllyListener(model, this, i, j));
+				b.addActionListener(new AllyListener(model, this, j, i));
 			}
 		}
 
 	}
 
 	private void battleFieldOpponent() {
+		opponent.removeAll();
 		int size = model.getOpponent().size();
 		opponent.setLayout(new GridLayout(size, size));
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
+		for (int i = 0; i < size; i++) { //y
+			for (int j = 0; j < size; j++) { //x
 				JButton b = new JButton();
+				if(model.opponentTouched(j, i)) {
+					if(model.getOpponentShip(j, i) != null){
+						b.setText("F");
+						b.setBackground(Color.RED);
+					} else {
+						b.setText("X");
+						b.setBackground(Color.GREEN);
+					}
+					b.setEnabled(false);
+				}
 				opponent.add(b);
-				b.addActionListener(new OpponentListener(model, i, j));
+				b.addActionListener(new OpponentListener(model, j, i));
 			}
 		}
-
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
 		//update ship combobox
 		comboShip.removeAllItems();
-		for(Ship s : shipsNoPlaced) {
+		for(Ship s : model.getShipsNoPlaced()) {
 			comboShip.addItem(s);
 		}
 		
 		//play available or not
-		if(shipsNoPlaced.isEmpty()) {
+		if(model.getShipsNoPlaced().isEmpty()) {
 			play.setEnabled(true);
 		}else {
 			play.setEnabled(false);
 		}
+		
+		if(model.getGameState() == Model.GameState.IN_GAME) {
+			comboShip.setEnabled(false);
+			play.setEnabled(false);
+			rotate.setEnabled(false);
+		} else {
+			comboShip.setEnabled(true);
+			rotate.setEnabled(true);	
+		}
+		
+		battleFieldAlly();
+		battleFieldOpponent();
+		
+		//pop up won
+		
+		JOptionPane jop = new JOptionPane();
+		if(model.won() && model.currentPlayer() == Model.PLAYER) {
+			jop.showMessageDialog(null, "You Win", "Victory", JOptionPane.INFORMATION_MESSAGE, imgWin);
+			//jop.setIcon(imgWin);
+		}
+		if (model.won() && model.currentPlayer() == Model.PC) {
+			jop.showMessageDialog(null, "You Lose", "Defeat", JOptionPane.INFORMATION_MESSAGE, imgLose);
+			
+		}
+		
+		this.revalidate();
 	}
 	
 	
 	public Ship getCurrentShip() {
-		return currentShip;
+		return (Ship) comboShip.getSelectedItem();
 	}
 	
-	private String orientationToString(boolean orientationChanged) {
-		if(orientationChanged) {
-			return "horizontal";
-		}
-		return "vertical";
+	
+	public boolean currentOrientationchanged() {
+		return rotate.getText().equals("vertical") ? false : true;
 	}
 
 }

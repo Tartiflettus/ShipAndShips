@@ -29,7 +29,7 @@ public class Model extends Observable implements Serializable {
 	
 	public enum GameState{PLACEMENT, IN_GAME};
 	
-	public final transient static int PLAYER = 1, PC = 0;
+	public final transient static int PLAYER = 0, PC = 1;
 	
 	private int currentPlayer;
 	private GameState gameState = GameState.PLACEMENT;
@@ -43,10 +43,14 @@ public class Model extends Observable implements Serializable {
 	
 
 	private BattleField ally, opponent;
+	
+	//private Ship currentShip;
+	private List<Ship> shipsNoPlaced;
+	private boolean shipsPlacedComputer;
 
 	public Model() {
 		// defaultvalues
-		int sizeBattleField = 10;
+		sizeBattleField = 10;
 
 		ally = new BattleField(sizeBattleField);
 		opponent = new BattleField(sizeBattleField);
@@ -56,6 +60,10 @@ public class Model extends Observable implements Serializable {
 		placement = PlacementRandomStrategy.getInstance();
 		
 		dao = ModelDAO.getInstance();
+
+		shipsNoPlaced = getShipFactory().getShips();
+		shipsPlacedComputer = false;
+
 	}
 
 	public Model(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {
@@ -63,6 +71,7 @@ public class Model extends Observable implements Serializable {
 	}
 	
 	public void newGame(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {
+		sizeBattleField = 10;
 		gameState = GameState.PLACEMENT;
 		ally = new BattleField(sizeBattleField);
 		opponent = new BattleField(sizeBattleField);
@@ -70,16 +79,22 @@ public class Model extends Observable implements Serializable {
 		shipFactory = age;
 		strat = strategy;
 		placement = placementStrat;
+		shipsNoPlaced = getShipFactory().getShips();
+		shipsPlacedComputer = false;
+		update();
 	}
 	
-	
+
+	public List<Ship> getShipsNoPlaced() {
+		return shipsNoPlaced;
+	}
 	
 
 	/**
 	 * @return true if the player or the computer won
 	 */
 	public boolean won() {
-		if (ally.won() || opponent.won()) {
+		if ((ally.won() || opponent.won()) && gameState == GameState.IN_GAME) {
 			return true;
 		}
 		return false;
@@ -133,10 +148,10 @@ public class Model extends Observable implements Serializable {
 				success = ally.receiveShot(x, y);
 				break;
 			}
-			if (success) {
+			if(!won()) {
 				endTurn();
-				update();
 			}
+			update();
 
 			return success;
 		} catch (NotInFieldException e) {
@@ -178,14 +193,36 @@ public class Model extends Observable implements Serializable {
 	}
 	
 	
+	
+	public Ship getAllyShip(int x, int y) {
+		try {
+			return ally.getShip(x, y);
+		} catch (NotInFieldException e) {
+			System.err.println("Searching ally ship out of field");
+		}
+		return null;
+	}
+	
+	public Ship getOpponentShip(int x, int y) {
+		try {
+			return opponent.getShip(x, y);
+		} catch (NotInFieldException e) {
+			System.err.println("Searching opponent ship out of field");
+		}
+		return null;
+	}
+	
 
 	/**
 	 * Execute the computer placement strategy of the ships
 	 */
-	public void PlaceShipComputer() {
+	public void placeShipComputer() {
 		try {
-			List<Ship> listShips = shipFactory.getShips();
-			placement.placeShips(opponent, listShips);
+			if (shipsPlacedComputer == false) {
+				List<Ship> listShips = shipFactory.getShips();
+				placement.placeShips(opponent, listShips);
+				shipsPlacedComputer = true;
+			} 
 
 		} catch (NotPlaceableException e) {
 			System.err.println("The computer can no longer place ships");
@@ -206,7 +243,9 @@ public class Model extends Observable implements Serializable {
 			ship.setPosition(x, y);
 			boolean everythingIsOk = ally.placeShip(ship);
 			if (everythingIsOk) {
+				shipsNoPlaced.remove(ship);
 				update();
+				return true;
 			} else {
 				return false;
 			}
@@ -225,6 +264,16 @@ public class Model extends Observable implements Serializable {
 			currentPlayer = PLAYER;
 		} else {
 			currentPlayer = PC;
+			try {
+				if(!won()) {
+					strat.shot(ally);
+					if(!won()) {
+						currentPlayer = PLAYER;
+					}
+				}
+			} catch (NotInFieldException e) {
+				System.err.println("Computer error when he wants to shot us");
+			}
 		}
 	}
 
@@ -315,6 +364,7 @@ public class Model extends Observable implements Serializable {
 	 */
 	public void setGameState(GameState gs) {
 		gameState = gs;
+		update();
 	}
 	
 	
