@@ -121,7 +121,7 @@ public class Model extends Observable implements Serializable {
 	/**
 	 * Notify Observers
 	 */
-	public void update() {
+	private void update() {
 		setChanged();
 		notifyObservers();
 	}
@@ -354,6 +354,7 @@ public class Model extends Observable implements Serializable {
 	 */
 	public void setGameState(GameState gs) {
 		gameState = gs;
+		update();
 	}
 	
 	

@@ -1,7 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
-
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -164,6 +164,13 @@ public class FieldView extends JFrame implements Observer {
 					b.setEnabled(false);
 					b.setText(s.letter());
 				}
+				if(model.allyTouched(j, i)) {
+					if(s != null){
+						b.setBackground(Color.RED);
+					} else {
+						b.setBackground(Color.GREEN);
+					}					
+				}
 				ally.add(b);
 				b.addActionListener(new AllyListener(model, this, j, i));
 			}
@@ -181,8 +188,10 @@ public class FieldView extends JFrame implements Observer {
 				if(model.opponentTouched(j, i)) {
 					if(model.getOpponentShip(j, i) != null){
 						b.setText("F");
+						b.setBackground(Color.RED);
 					} else {
 						b.setText("X");
+						b.setBackground(Color.GREEN);
 					}
 					b.setEnabled(false);
 				}
@@ -205,6 +214,12 @@ public class FieldView extends JFrame implements Observer {
 			play.setEnabled(true);
 		}else {
 			play.setEnabled(false);
+		}
+		
+		if(model.getGameState() == Model.GameState.IN_GAME) {
+			comboShip.setEnabled(false);
+			play.setEnabled(false);
+			rotate.setEnabled(false);
 		}
 		
 		battleFieldAlly();
