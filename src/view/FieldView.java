@@ -179,7 +179,11 @@ public class FieldView extends JFrame implements Observer {
 			for (int j = 0; j < size; j++) { //x
 				JButton b = new JButton();
 				if(model.opponentTouched(j, i)) {
-					b.setText("X");
+					if(model.getOpponentShip(j, i) != null){
+						b.setText("F");
+					} else {
+						b.setText("X");
+					}
 					b.setEnabled(false);
 				}
 				opponent.add(b);

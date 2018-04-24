@@ -195,6 +195,15 @@ public class Model extends Observable implements Serializable {
 		return null;
 	}
 	
+	public Ship getOpponentShip(int x, int y) {
+		try {
+			return opponent.getShip(x, y);
+		} catch (NotInFieldException e) {
+			System.err.println("Searching opponent ship out of field");
+		}
+		return null;
+	}
+	
 
 	/**
 	 * Execute the computer placement strategy of the ships

@@ -28,6 +28,10 @@ public class PlacementRandomStrategy implements PlacementStrategy {
 	public void placeShips(BattleField bf, List<Ship> ships) throws ShipException {
 		int bfSize = bf.size();
 		for(Ship s : ships) {
+			double rand = Math.random();
+			if(rand < 0.5) {
+				s.changeOrientation();
+			}
 			int height = s.getHeight(); 
 			int width = s.getWidth();
 
