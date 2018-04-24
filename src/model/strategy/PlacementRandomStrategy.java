@@ -40,7 +40,7 @@ public class PlacementRandomStrategy implements PlacementStrategy {
 				
 				for (int i = x ; i < (x+width) ; i++) {
 					for (int j = y ; j < (y+height) ; j++) {
-						if(s.isDestructible(i, j)) {
+						if(bf.getShip(i, j) == null) {
 							cptCases ++;
 						}
 					}
@@ -49,6 +49,7 @@ public class PlacementRandomStrategy implements PlacementStrategy {
 					placeable = true;
 					s.setPosition(x, y);
 					bf.placeShip(s);
+					System.out.println("1 " + x +" " + y);
 				}
 				cptLoop ++;
 				if(cptLoop == 200) throw new NotPlaceableException();

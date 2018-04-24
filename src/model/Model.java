@@ -46,6 +46,7 @@ public class Model extends Observable implements Serializable {
 	
 	//private Ship currentShip;
 	private List<Ship> shipsNoPlaced;
+	private boolean shipsPlacedComputer;
 
 	public Model() {
 		// defaultvalues
@@ -58,6 +59,7 @@ public class Model extends Observable implements Serializable {
 		strat = RandomComputerStrategy.getInstance();
 		placement = PlacementRandomStrategy.getInstance();
 		shipsNoPlaced = getShipFactory().getShips();
+		shipsPlacedComputer = false;
 	}
 
 	public Model(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {
@@ -73,6 +75,7 @@ public class Model extends Observable implements Serializable {
 		strat = strategy;
 		placement = placementStrat;
 		shipsNoPlaced = getShipFactory().getShips();
+		shipsPlacedComputer = false;
 	}
 	
 
@@ -196,10 +199,13 @@ public class Model extends Observable implements Serializable {
 	/**
 	 * Execute the computer placement strategy of the ships
 	 */
-	public void PlaceShipComputer() {
+	public void placeShipComputer() {
 		try {
-			List<Ship> listShips = shipFactory.getShips();
-			placement.placeShips(opponent, listShips);
+			if (shipsPlacedComputer == false) {
+				List<Ship> listShips = shipFactory.getShips();
+				placement.placeShips(opponent, listShips);
+				shipsPlacedComputer = true;
+			} 
 
 		} catch (NotPlaceableException e) {
 			System.err.println("The computer can no longer place ships");

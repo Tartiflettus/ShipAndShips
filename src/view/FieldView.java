@@ -139,6 +139,7 @@ public class FieldView extends JFrame implements Observer {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//faire passer le model en mode play
+				model.placeShipComputer();
 				model.setGameState(Model.GameState.IN_GAME);
 			}
 		});
