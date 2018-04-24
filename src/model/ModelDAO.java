@@ -30,6 +30,7 @@ public class ModelDAO {
 			ObjectOutputStream oos = new ObjectOutputStream(fos); //on précise que le flux correspond à un objet
 			
 			oos.writeObject(m);//on écrit m dans le flux oos
+			
 			oos.close();//on ferme le flux
 			
 		}catch(IOException err){

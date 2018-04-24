@@ -54,6 +54,8 @@ public class Model extends Observable implements Serializable {
 		shipFactory = ModernShipFactory.getInstance();
 		strat = RandomComputerStrategy.getInstance();
 		placement = PlacementRandomStrategy.getInstance();
+		
+		dao = ModelDAO.getInstance();
 	}
 
 	public Model(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {

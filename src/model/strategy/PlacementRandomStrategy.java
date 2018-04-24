@@ -1,5 +1,6 @@
 package model.strategy;
 
+import java.io.Serializable;
 import java.util.List;
 
 import exception.NotInFieldException;
@@ -8,7 +9,7 @@ import exception.ShipException;
 import model.BattleField;
 import model.ship.Ship;
 
-public class PlacementRandomStrategy implements PlacementStrategy {
+public class PlacementRandomStrategy implements PlacementStrategy, Serializable {
 	
 	private static final PlacementRandomStrategy instance = new PlacementRandomStrategy();
 	

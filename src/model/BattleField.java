@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import model.ship.Ship;
  * @author Victor
  *
  */
-public class BattleField {
+public class BattleField implements Serializable {
 	
 	private List<Ship> ships;
 	private boolean[][] touched;

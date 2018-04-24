@@ -1,5 +1,6 @@
 package model.strategy;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import exception.NotInFieldException;
@@ -10,7 +11,7 @@ import model.BattleField;
  * @author Eva
  *	random strategy used when the computer plays
  */
-public class RandomComputerStrategy implements ComputerStrategy {
+public class RandomComputerStrategy implements ComputerStrategy, Serializable {
 	
 	private static RandomComputerStrategy instance = new RandomComputerStrategy();
 	private Random rand;

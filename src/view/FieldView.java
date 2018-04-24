@@ -1,18 +1,21 @@
 package view;
 
 import java.awt.BorderLayout;
-
+import java.awt.Button;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -55,6 +58,10 @@ public class FieldView extends JFrame implements Observer {
 	private JComboBox<Ship> comboShip = new JComboBox<>();
 	private JButton rotate;
 	private JButton play;
+	
+	// CHOOSE MENU FOR SAVE AND LOAD
+	private final JFileChooser fcSave = new JFileChooser();
+	private final JFileChooser fcLoad = new JFileChooser();
 
 	public FieldView(Model mod) {
 		model = mod;
@@ -79,6 +86,28 @@ public class FieldView extends JFrame implements Observer {
 		// save
 		file.add(save);
 		save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_MASK));
+		save.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				int sDial = fcSave.showSaveDialog(null);
+				
+				if (sDial == JFileChooser.APPROVE_OPTION) {
+	                File fileToSave = fcSave.getSelectedFile();
+	                try {
+						model.save(fileToSave.getAbsolutePath());
+						System.out.println("Sauvegarde "+fileToSave.getName()+".souss créée !");
+					} catch (IOException e1) {
+						//e1.printStackTrace();
+					}
+
+	             } else {
+	                  System.out.println("L'enregistrement est annulé\n");
+	             }
+			}
+		});
 
 		// load
 		file.add(load);

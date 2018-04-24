@@ -1,5 +1,6 @@
 package model.strategy;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import exception.NotInFieldException;
@@ -11,7 +12,7 @@ import model.BattleField;
  * strategy cross used when the computer plays 
  *
  */
-public class CrossComputerStrategy implements ComputerStrategy {
+public class CrossComputerStrategy implements ComputerStrategy, Serializable {
 
 	private static CrossComputerStrategy instance = new CrossComputerStrategy();
 	private int lastShotX;
