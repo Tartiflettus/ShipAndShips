@@ -42,9 +42,9 @@ public class ModelDAO {
 	public Model load(String name) throws IOException {
 		Model m = null;
 		try{
-			FileInputStream fis = new FileInputStream(name+".souss");//lire un fichier de sauvegarde
+			FileInputStream fis = new FileInputStream(name);//lire un fichier de sauvegarde
 			ObjectInputStream ois = new ObjectInputStream(fis);//flux object
-			m = (Model)ois.readObject();//
+			m = (Model)ois.readObject();//lire le flux
 			ois.close();
 		}catch(IOException | ClassNotFoundException e){
 			;

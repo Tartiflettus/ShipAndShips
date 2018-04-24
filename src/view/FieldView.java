@@ -119,6 +119,27 @@ public class FieldView extends JFrame implements Observer {
 		// load
 		file.add(load);
 		load.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_MASK));
+		load.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+				int lDial = fcLoad.showOpenDialog(null);
+				if (lDial == JFileChooser.APPROVE_OPTION) {
+	                File fileToLoad = fcLoad.getSelectedFile();
+	                System.out.println(fileToLoad.getAbsolutePath());
+	                try {
+						model.load(fileToLoad.getAbsolutePath());
+						System.out.println("Sauvegarde "+fileToLoad.getName()+".souss chargée !");
+					} catch (IOException e1) {
+						//e1.printStackTrace();
+					}
+
+	             } else {
+	                  System.out.println("Le chargement est annulé\n");
+	             }
+			}
+		});
 
 		// file
 		menu.add(file);

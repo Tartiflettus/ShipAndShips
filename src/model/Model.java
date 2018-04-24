@@ -306,7 +306,10 @@ public class Model extends Observable implements Serializable {
 		strat = info.getStrat();
 		placement = info.getPlacement();
 		sizeBattleField = info.getSizeBattleField();
+		shipsPlacedComputer = info.getShipsPlacedComputer();
+		shipsNoPlaced = info.getShipsNoPlaced();
 		
+		update();
 		
 	}
 	
@@ -336,6 +339,10 @@ public class Model extends Observable implements Serializable {
 	
 	public int getSizeBattleField(){
 		return sizeBattleField;
+	}
+	
+	public boolean getShipsPlacedComputer(){
+		return shipsPlacedComputer;
 	}
 
 
