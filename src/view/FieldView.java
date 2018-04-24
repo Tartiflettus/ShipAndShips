@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
@@ -220,10 +221,26 @@ public class FieldView extends JFrame implements Observer {
 			comboShip.setEnabled(false);
 			play.setEnabled(false);
 			rotate.setEnabled(false);
+		} else {
+			comboShip.setEnabled(true);
+			rotate.setEnabled(true);	
 		}
 		
 		battleFieldAlly();
 		battleFieldOpponent();
+		
+		//pop up won
+		
+		JOptionPane jop = new JOptionPane();
+		if(model.won() && model.currentPlayer() == Model.PLAYER) {
+			jop.showMessageDialog(null, "You Win", "Victory", JOptionPane.INFORMATION_MESSAGE);
+			
+		}
+		if (model.won() && model.currentPlayer() == Model.PC) {
+			jop.showMessageDialog(null, "You Lose", "Defeat", JOptionPane.INFORMATION_MESSAGE);
+			
+		}
+		
 		this.revalidate();
 	}
 	

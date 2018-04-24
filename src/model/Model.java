@@ -50,7 +50,7 @@ public class Model extends Observable implements Serializable {
 
 	public Model() {
 		// defaultvalues
-		int sizeBattleField = 10;
+		sizeBattleField = 10;
 
 		ally = new BattleField(sizeBattleField);
 		opponent = new BattleField(sizeBattleField);
@@ -67,6 +67,7 @@ public class Model extends Observable implements Serializable {
 	}
 	
 	public void newGame(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {
+		sizeBattleField = 10;
 		gameState = GameState.PLACEMENT;
 		ally = new BattleField(sizeBattleField);
 		opponent = new BattleField(sizeBattleField);
@@ -76,6 +77,7 @@ public class Model extends Observable implements Serializable {
 		placement = placementStrat;
 		shipsNoPlaced = getShipFactory().getShips();
 		shipsPlacedComputer = false;
+		update();
 	}
 	
 
@@ -88,7 +90,7 @@ public class Model extends Observable implements Serializable {
 	 * @return true if the player or the computer won
 	 */
 	public boolean won() {
-		if (ally.won() || opponent.won()) {
+		if ((ally.won() || opponent.won()) && gameState == GameState.IN_GAME) {
 			return true;
 		}
 		return false;
@@ -142,7 +144,9 @@ public class Model extends Observable implements Serializable {
 				success = ally.receiveShot(x, y);
 				break;
 			}
-			endTurn();
+			if(!won()) {
+				endTurn();
+			}
 			update();
 
 			return success;
