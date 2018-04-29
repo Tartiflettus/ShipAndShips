@@ -36,7 +36,7 @@ public class ModelDAO {
 			oos.close();//we close oos
 			
 		}catch(IOException err){
-			;
+			System.err.println("Impossible to save the game");
 		}
 		
 	}
@@ -55,7 +55,7 @@ public class ModelDAO {
 			m = (Model)ois.readObject();
 			ois.close();
 		}catch(IOException | ClassNotFoundException e){
-			;
+			System.err.println("Impossible to load the file");
 		}
 		
 		return m;
