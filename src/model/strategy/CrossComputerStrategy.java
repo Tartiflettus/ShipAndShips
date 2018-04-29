@@ -65,7 +65,7 @@ public class CrossComputerStrategy implements ComputerStrategy, Serializable {
 			if(!b.touched(x, y)) { // if we did'nt already shot this area
 				findShot = true;
 			}
-			System.out.println("Searching a good shot");
+			//System.out.println("Searching a good shot");
 		}
 		if(b.receiveShot(x, y)) {
 			lastShotX = x;

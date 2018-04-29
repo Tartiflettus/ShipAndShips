@@ -54,7 +54,7 @@ public class PlacementRandomStrategy implements PlacementStrategy, Serializable 
 					placeable = true;
 					s.setPosition(x, y);
 					bf.placeShip(s);
-					System.out.println(x+ " "+y);
+					//System.out.println(x+ " "+y);
 				}
 				cptLoop ++;
 				if(cptLoop == 200) throw new NotPlaceableException();
