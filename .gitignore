@@ -2,4 +2,8 @@
 
 bin
 bin/*
+doc
+doc/*
+exe
+exe/*
 

@@ -1,4 +1,4 @@
-<project name="ACL2017_Tartiflotte">
+<project name="ShipAndShips">
 	<property name="test.src.dir" value="src/test"/>
 	<property name="test.bin.dir" value="bin/test"/>
 	<property name="src.dir" value="src"/>
