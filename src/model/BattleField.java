@@ -134,12 +134,6 @@ public class BattleField implements Serializable {
 		return true;
 	}
 	
-
-	public String parse(){
-		return null;
-	}
-
-	
 	
 	/**
 	 * Place a ship at the given position

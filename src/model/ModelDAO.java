@@ -16,22 +16,24 @@ public class ModelDAO {
 	}
 
 	private ModelDAO() {
-		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * 
+	 * @param m Model that we want to save
+	 * @param fn name of the save file
+	 * @throws IOException
+	 */
 	public void save(Model m, String fn) throws IOException {
-		
-		
-		
-		//on parse les objets représentatifs d'un état
+		//we parse the objects of a state
 		
 		try{
-			FileOutputStream fos = new FileOutputStream(fn+".souss");//créer un nouveau ficher
-			ObjectOutputStream oos = new ObjectOutputStream(fos); //on précise que le flux correspond à un objet
+			FileOutputStream fos = new FileOutputStream(fn+".souss");//create new file
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			
-			oos.writeObject(m);//on écrit m dans le flux oos
+			oos.writeObject(m);//we write in oos
 			
-			oos.close();//on ferme le flux
+			oos.close();//we close oos
 			
 		}catch(IOException err){
 			;
@@ -39,12 +41,18 @@ public class ModelDAO {
 		
 	}
 	
+	/**
+	 * 
+	 * @param name name of the save file
+	 * @return return the model that we loaded
+	 * @throws IOException
+	 */
 	public Model load(String name) throws IOException {
 		Model m = null;
 		try{
-			FileInputStream fis = new FileInputStream(name);//lire un fichier de sauvegarde
+			FileInputStream fis = new FileInputStream(name);//read a save file
 			ObjectInputStream ois = new ObjectInputStream(fis);//flux object
-			m = (Model)ois.readObject();//lire le flux
+			m = (Model)ois.readObject();
 			ois.close();
 		}catch(IOException | ClassNotFoundException e){
 			;
@@ -52,17 +60,21 @@ public class ModelDAO {
 		
 		return m;
 	}
-	
+	/**
+	 * 
+	 * @param name name of the file
+	 * @throws Exception impossible to access the file
+	 */
 	public void delete(String name) throws Exception {
 		
 		File rip = new File(name+".souss");
 		
 		if (!rip.exists()) {
-            throw new Exception("Fichier Introuvable");
+            throw new Exception("Impossible to find the file");
         }
-//Tester les propriétés et les droits sur le fichier
+		//properties and access on the file
         if (!rip.canWrite()) {
-            throw new Exception("Droit insuffisant pour accéder au fichier");
+            throw new Exception("You are not allowed to access this file");
         }
  
         rip.delete();

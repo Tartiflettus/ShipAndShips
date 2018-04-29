@@ -30,7 +30,10 @@ public class CrossComputerStrategy implements ComputerStrategy, Serializable {
 	}
 	
 	
-	@Override
+	/**
+	 * method that the computer uses to attack the player battlefield
+	 * @param b BattleField of the player
+	 */
 	public void shot(BattleField b) throws NotInFieldException {
 		if (lastShotX != -1 && lastShotX != -1) {
 			if (b.getShip(lastShotX, lastShotY) != null && b.destroyed(lastShotX, lastShotY)) {

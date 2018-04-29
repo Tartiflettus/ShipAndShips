@@ -78,8 +78,6 @@ public class FieldView extends JFrame implements Observer {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setPreferredSize(new Dimension(600, 600));
 		
-		//currentShip = shipsNoPlaced.get(0);
-		
 		// MENU
 		// new game
 		file.add(newGame);
@@ -105,13 +103,9 @@ public class FieldView extends JFrame implements Observer {
 	                File fileToSave = fcSave.getSelectedFile();
 	                try {
 						model.save(fileToSave.getAbsolutePath());
-						System.out.println("Sauvegarde "+fileToSave.getName()+".souss créée !");
 					} catch (IOException e1) {
-						//e1.printStackTrace();
 					}
 
-	             } else {
-	                  System.out.println("L'enregistrement est annulé\n");
 	             }
 			}
 		});
@@ -127,17 +121,13 @@ public class FieldView extends JFrame implements Observer {
 				int lDial = fcLoad.showOpenDialog(null);
 				if (lDial == JFileChooser.APPROVE_OPTION) {
 	                File fileToLoad = fcLoad.getSelectedFile();
-	                System.out.println(fileToLoad.getAbsolutePath());
 	                try {
 						model.load(fileToLoad.getAbsolutePath());
-						System.out.println("Sauvegarde "+fileToLoad.getName()+".souss chargée !");
 					} catch (IOException e1) {
 						//e1.printStackTrace();
 					}
 
-	             } else {
-	                  System.out.println("Le chargement est annulé\n");
-	             }
+	             } 
 			}
 		});
 
@@ -196,14 +186,12 @@ public class FieldView extends JFrame implements Observer {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//faire passer le model en mode play
+				//play mode
 				model.placeShipComputer();
 				model.setGameState(Model.GameState.IN_GAME);
 			}
 		});
 		shipsPanel.add(play);
-		
-		
 		
 		// --
 		
@@ -213,6 +201,9 @@ public class FieldView extends JFrame implements Observer {
 		setVisible(true);
 	}
 
+	/**
+	 * to create the ally battlefield
+	 */
 	private void battleFieldAlly() {
 		ally.removeAll();
 		int size = model.getAlly().size();
@@ -239,6 +230,9 @@ public class FieldView extends JFrame implements Observer {
 
 	}
 
+	/**
+	 * to create the opponent battlefield
+	 */
 	private void battleFieldOpponent() {
 		opponent.removeAll();
 		int size = model.getOpponent().size();
@@ -262,7 +256,9 @@ public class FieldView extends JFrame implements Observer {
 		}
 	}
 
-	@Override
+	/**
+	 * update method
+	 */
 	public void update(Observable o, Object arg) {
 		//update ship combobox
 		comboShip.removeAllItems();
@@ -290,7 +286,6 @@ public class FieldView extends JFrame implements Observer {
 		battleFieldOpponent();
 		
 		//pop up won
-		
 		JOptionPane jop = new JOptionPane();
 		if(model.won() && model.currentPlayer() == Model.PLAYER) {
 			jop.showMessageDialog(null, "You Win", "Victory", JOptionPane.INFORMATION_MESSAGE, imgWin);
@@ -309,7 +304,10 @@ public class FieldView extends JFrame implements Observer {
 		return (Ship) comboShip.getSelectedItem();
 	}
 	
-	
+	/**
+	 * 
+	 * @return true if the orientation changed
+	 */
 	public boolean currentOrientationchanged() {
 		return rotate.getText().equals("vertical") ? false : true;
 	}

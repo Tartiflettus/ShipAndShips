@@ -18,9 +18,9 @@ public class Cruiser extends Ship {
 		isPlaced = false;
 	}
 	
-	@Override
+
 	public String toString() {
-		return "Cruiser";
+		return "Cruiser " + getHeight() + "x" + getWidth();
 	}
 	
 	@Override

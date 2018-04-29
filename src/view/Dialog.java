@@ -43,7 +43,9 @@ public class Dialog extends JDialog {
     this.setVisible(true);
   }
 
-
+  /**
+   * create the components of the dialog view
+   */
   private void initComponent(){
 	  //PANELS
 	// age of boats
@@ -126,6 +128,11 @@ public class Dialog extends JDialog {
   
   //GETTER
   
+  /**
+   * 
+   * @param age of the ships
+   * @return the age of the ships to the new game
+   */
   private ShipFactory getAge(JComboBox age) {
 	  String a = (String) age.getSelectedItem();
 	  if (a.equals("Modern")) {
@@ -134,6 +141,11 @@ public class Dialog extends JDialog {
 	  return null;
   }
   
+  /**
+   * 
+   * @param strategy attack strategy of the computer
+   * @return the attack strategy of the computer to the new game
+   */
   private ComputerStrategy getStrategy(JComboBox strategy) {
 	  String s = (String) strategy.getSelectedItem();
 	  if (s.equals("Random")) {
@@ -145,7 +157,11 @@ public class Dialog extends JDialog {
 	  return null;
   }
   
-  
+  /**
+   * 
+   * @param placement strategy of ships placement of the computer
+   * @return the strategy of ships placement of the computer to the new game
+   */
   private PlacementStrategy getPlacement(JComboBox placement) {
 	  String s = (String) placement.getSelectedItem();
 	  if (s.equals("Random")) {

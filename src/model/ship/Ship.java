@@ -11,11 +11,8 @@ public abstract class Ship implements Serializable {
 	protected int nbCasesTouched;
 	protected boolean isPlaced;
 	
-	
 	public abstract String letter();
-	
-	
-	
+
 	/**
 	 * 
 	 * @return true the Orientation is different from the initial orientation
@@ -31,10 +28,11 @@ public abstract class Ship implements Serializable {
 		int tmp = height;
 		height = width;
 		width = tmp;
+		
 	}
 	
 	/**
-	 * 
+	 * set the position of the Ship
 	 * @param newX abscissa of the new position of the ship
 	 * @param newY ordinate of the new position of the ship
 	 */
@@ -127,14 +125,7 @@ public abstract class Ship implements Serializable {
 	public int getNbCases() {
 		return nbCases;
 	}
-	
-	
-	public String parse(){
-		StringBuilder buff = new StringBuilder("");
-		
-		
-		return buff.toString();
-	}
-	
+
+
 
 }

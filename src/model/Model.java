@@ -70,6 +70,12 @@ public class Model extends Observable implements Serializable {
 		newGame(age, strategy, placementStrat);
 	}
 	
+	/**
+	 * to begin a new game
+	 * @param age age of the Ships
+	 * @param strategy attack strategy of the computer
+	 * @param placementStrat placement strategy of the computer
+	 */
 	public void newGame(ShipFactory age, ComputerStrategy strategy, PlacementStrategy placementStrat) {
 		sizeBattleField = 10;
 		gameState = GameState.PLACEMENT;
@@ -101,7 +107,7 @@ public class Model extends Observable implements Serializable {
 	}
 
 	/**
-	 * 
+	 * set the age of the game
 	 * @param sf
 	 *            ShipFactory
 	 */
@@ -132,10 +138,12 @@ public class Model extends Observable implements Serializable {
 		notifyObservers();
 	}
 
-	public void setSaveMethod(ModelDAO dao) {
-
-	}
-
+	/**
+	 * attack the opponent battlefield at the position (x,y)
+	 * @param x abscissa of the shot
+	 * @param y ordinate of the shot
+	 * @return
+	 */
 	public boolean shot(int x, int y) {
 		boolean success = false;
 		try {
@@ -177,6 +185,11 @@ public class Model extends Observable implements Serializable {
 		return false;
 	}
 	
+	public void changeShipOrientation(Ship s) {
+		s.changeOrientation();
+		update();
+	}
+	
 	/**
 	 * check if an opponent case is touched
 	 * @param x absissa
@@ -192,8 +205,12 @@ public class Model extends Observable implements Serializable {
 		return false;
 	}
 	
-	
-	
+	/** 
+	 * Get the ally ship at a given position
+	 * @param x absissa
+	 * @param y ordinate
+	 * @return the ally ship at the given position, or null
+	 */
 	public Ship getAllyShip(int x, int y) {
 		try {
 			return ally.getShip(x, y);
@@ -203,6 +220,12 @@ public class Model extends Observable implements Serializable {
 		return null;
 	}
 	
+	/** 
+	 * Get the opponent ship at a given position
+	 * @param x absissa
+	 * @param y ordinate
+	 * @return the opponent ship at the given position, or null
+	 */
 	public Ship getOpponentShip(int x, int y) {
 		try {
 			return opponent.getShip(x, y);
@@ -258,7 +281,6 @@ public class Model extends Observable implements Serializable {
 	/**
 	 * change the current player
 	 */
-
 	private void endTurn() {
 		if (currentPlayer == PC) {
 			currentPlayer = PLAYER;
@@ -278,25 +300,23 @@ public class Model extends Observable implements Serializable {
 	}
 
 	/**
-	 * sauvegarde l'état actuel du jeu dans le fichier de chemin fn.souss par l'intermediaire du DAO
-	 * @param fn
+	 * save the game in the save file fn
+	 * @param fn name of the save file
 	 * @throws IOException
 	 */
 	
 	public void save(String fn) throws IOException {	
-		
 		dao.save(this, fn);
 		
 	}
 	
 	/**
-	 * charge l'objet Model du fichier fn et set les champs de l'objet dans le model actuel
-	 * @param fn
+	 * load the Madel saved in the file fn
+	 * @param fn name of the save file
 	 * @throws IOException
 	 */
 	
 	public void load(String fn) throws IOException{
-		
 		Model info = dao.load(fn);
 		
 		gameState = info.getGameState();
@@ -340,24 +360,14 @@ public class Model extends Observable implements Serializable {
 	public int getSizeBattleField(){
 		return sizeBattleField;
 	}
-	
+
 	public boolean getShipsPlacedComputer(){
 		return shipsPlacedComputer;
 	}
 
 
-	public String parse(){
-		StringBuilder buff = new StringBuilder("");
-		
-		buff.append(currentPlayer+"	"+strat.parse()+"	"+placement.parse()+"	"+ally.parse()+"	"+opponent.parse());
-		
-		return buff.toString();
-	
-	}
-
 	/**
 	 * Access state of the game
-	 * 
 	 * @return state of the game
 	 */
 	public GameState getGameState() {

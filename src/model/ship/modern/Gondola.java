@@ -20,7 +20,7 @@ public class Gondola extends Ship {
 	
 	@Override
 	public String toString() {
-		return "Gondola";
+		return "Gondola " + getHeight() + "x" + getWidth();
 	}
 	
 	@Override

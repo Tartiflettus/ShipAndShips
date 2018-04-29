@@ -27,7 +27,8 @@ public class AllyListener implements ActionListener {
 			final Ship s = field.getCurrentShip();
 			if(s != null) {
 				if(field.currentOrientationchanged()) {
-					s.changeOrientation();
+					//s.changeOrientation();
+					model.changeShipOrientation(s);
 				}
 				model.placeShip(field.getCurrentShip(), x, y);
 			}
