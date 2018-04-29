@@ -17,7 +17,7 @@ public abstract class Ship implements Serializable {
 	 * 
 	 * @return true the Orientation is different from the initial orientation
 	 */
-	public boolean OrientationChanged() {
+	public boolean orientationChanged() {
 		 return (height >= width) ? false : true;
 	}
 	
