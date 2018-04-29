@@ -1,0 +1,80 @@
+<project name="ACL2017_Tartiflotte">
+	<property name="test.src.dir" value="src/test"/>
+	<property name="test.bin.dir" value="bin/test"/>
+	<property name="src.dir" value="src"/>
+	<property name="bin.dir" value="bin"/>
+	<property name="jar.dir" value="exe"/>
+	<!--<property name="lib.dir" value="lib"/> -->
+	<property name="doc.dir" value="doc"/>
+	<property name="main-class" value="Main"/>
+	<property name="jar.name" value="ShipAndShips.jar"/>
+	<!--<property name="native.path" value="lib/natives"/>-->
+	<property name="resources.dir" value="res"/>
+	
+	<path id="project.class.path">
+		<pathelement location="src/"/>
+		<pathelement location="res/"/>
+	</path>
+	
+	
+	<path id="class.path.test">
+	    <!--<pathelement location="lib/junit-4.12.jar"/>
+	    <pathelement location="lib/hamcrest-core-1.3.jar"/>-->
+		<pathelement location="${bin.dir}"/>
+	</path>
+	
+	
+	<target name="run" depends="jar">
+		<java jar="${jar.dir}/${jar.name}" fork="true">
+			<!--<jvmarg value="-Djava.library.path=lib/natives" />-->
+		</java>
+	</target>
+	<target name="clean">
+		<delete dir="${jar.dir}"/>
+		<delete dir="${bin.dir}"/>
+		<delete dir="${doc.dir}"/>
+		<echo message="nettoyage terminé"/>
+	</target>
+	<target name="compile">
+		<mkdir dir="${bin.dir}"/>
+		<javac srcdir="${src.dir}" destdir="${bin.dir}">
+			<classpath>
+				<fileset dir="${lib.dir}">
+					<include name="**/*.jar"/>
+				</fileset>
+				<fileset dir="${resources.dir}"/>
+			</classpath>
+		</javac>
+		<echo message="compilation terminée"/>
+	</target>
+	<target name="jar" depends="compile">
+		<mkdir dir="${jar.dir}"/>
+		<jar destfile="${jar.dir}/${jar.name}" basedir="${bin.dir}">
+			<!--<zipgroupfileset dir="${lib.dir}" includes="*.jar"/>-->
+			<fileset dir="${resources.dir}" />
+			<manifest>
+				<attribute name="Main-Class" value="${main-class}"/>
+			</manifest>
+		</jar>
+		<echo message="Creation du fichier jar terminée"/>
+	</target>
+	
+	<target name="javadoc">
+		<mkdir dir="${doc.dir}"/>
+        <javadoc access="protected" author="true" classpath="" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="exception,model,view" source="1.8" sourcefiles="src/Main.java" sourcepath="src;res" splitindex="true" use="true" version="true"/>
+    </target>
+	
+	<target name="test" depends="compile">
+    	<junit printsummary="on" haltonfailure="yes" fork="true">
+	        <classpath>
+	         	<path refid="class.path.test"/>
+	    		<pathelement location="${test.bin.dir}"/>
+	        </classpath>
+	        <formatter type="brief" usefile="false" />
+	        <batchtest>
+	            <fileset dir="${test.src.dir}" includes="**/*.java" />
+        	</batchtest>
+    	</junit>
+  	</target>
+	
+</project>
